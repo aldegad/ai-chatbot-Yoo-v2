@@ -11,7 +11,7 @@ const nextConfig = withExpo({
   ],
   experimental: {
     forceSwcTransforms: true,
-  },
+  }
 });
 
 module.exports = nextConfig;
