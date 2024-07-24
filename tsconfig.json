@@ -27,6 +27,9 @@
       ],
       "@pages/*": [
         "pages/*"
+      ],
+      "@env": [
+        "env.local.ts"
       ]
     },
     "incremental": true

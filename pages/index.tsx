@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Div from '@local_modules/tags/Div';
 import Span from '@local_modules/tags/Span';
 import Br from '@local_modules/tags/Br';
+import axios from 'axios';
+import env from '@env';
 
 export default function App() {
+  const [message, setMessage] = useState<string>('');
+
+  useEffect(() => {
+    console.log(`${env.LOCAL_ADDRESS}`);
+    axios.get(`${env.LOCAL_ADDRESS}/api/hello`)
+      .then((response) => setMessage(response.data.message))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
   return (
     <Div style={styles.container}>
       <Span style={styles.text}>Welcome to Expo + Next.js 👋</Span>
@@ -14,7 +25,7 @@ export default function App() {
         <Br />
         another line
         <Div style={styles.nestedDiv}>
-          Nested Div inside Span
+          {message}
         </Div>
       </Div>
     </Div>
