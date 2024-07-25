@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import Div from '@local_modules/tags/Div';
 import Span from '@local_modules/tags/Span';
 import Br from '@local_modules/tags/Br';
 import axios from 'axios';
 import env from '@env';
+import Input from '@local_modules/tags/Input';
 
 export default function App() {
   const [message, setMessage] = useState<string>('');
+  const [response, setResponse] = useState<string>('');
 
   useEffect(() => {
     console.log(`${env.LOCAL_ADDRESS}`);
-    axios.post(`${env.LOCAL_ADDRESS}/api/chat`, { message: 'hello' })
-      .then((response) => setMessage(response.data.message))
-      .catch((error) => console.error('Error fetching data:', error));
   }, []);
+
+  const onEnter = (e:any) => {
+    console.log(e);
+    axios.post(`${env.LOCAL_ADDRESS}/api/chat`, { message: message })
+    .then((response) => setResponse(response.data.message))
+    .catch((error) => console.error('Error fetching data:', error));
+  }
 
   return (
     <Div style={styles.container}>
-      <Div style={styles.text}>Welcome to Expo + Next.js 👋</Div>
-      <Div>{message}</Div>
+      <Text style={styles.text}>Welcome to Expo + Next.js 👋</Text>
+      <Div style={styles.text}>{response}</Div>
+      <Input value={message} onChange={(e) => setMessage(e.instance.value)} onEnter={onEnter}></Input>
     </Div>
   );
 }
@@ -30,23 +37,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center', // 웹과 네이티브 모두 가운데 정렬
-    fontSize: 30, // 이 스타일이 네이티브에서는 Text로 전달됩니다.
-  },
-  subMessage: {
-    fontSize: 20, // 이 스타일도 네이티브에서는 Text로 전달됩니다.
-    color: 'gray',
+    fontSize: 16, // 이 스타일이 네이티브에서는 Text로 전달됩니다.
   },
   text: {
     margin: 10,
-    fontSize: 30, // 이 스타일이 네이티브에서는 Text로 전달됩니다.
-  },
-  subText: {
-    fontSize: 20, // 이 스타일도 네이티브에서는 Text로 전달됩니다.
-    color: 'gray',
-  },
-  nestedDiv: {
-    margin: 10,
-    padding: 10,
-    backgroundColor: 'lightgray',
-  },
+    fontSize: 14, // 이 스타일이 네이티브에서는 Text로 전달됩니다.
+  }
 });

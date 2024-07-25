@@ -1,5 +1,6 @@
+import Input from '@local_modules/tags/Input';
 import React from 'react';
-import { Text, TextStyle, ViewStyle } from 'react-native';
+import { Text, TextInput, TextStyle, ViewStyle } from 'react-native';
 
 const textStyles = ['fontSize', 'color', 'fontWeight', 'lineHeight', 'textAlign', 'fontFamily'];
 
@@ -21,7 +22,12 @@ export const splitStyles = (style: any): { textStyle: TextStyle; viewStyle: View
 export const applyTextStylesRecursively = (children: React.ReactNode, textStyle: TextStyle): any => {
   return React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      const newStyle = [child.props.style, textStyle];
+      // TextInput이면 텍스트 스타일을 적용하지 않음
+      console.log(child.type === Input);
+      if (child.type === Input) {
+        return child;
+      }
+      const newStyle = [textStyle, child.props.style];
       const newChildren = applyTextStylesRecursively(child.props.children, textStyle);
       return React.cloneElement<any>(child, { style: newStyle }, newChildren);
     }
