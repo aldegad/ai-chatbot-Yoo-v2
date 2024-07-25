@@ -11,23 +11,15 @@ export default function App() {
 
   useEffect(() => {
     console.log(`${env.LOCAL_ADDRESS}`);
-    axios.get(`${env.LOCAL_ADDRESS}/api/hello`)
+    axios.post(`${env.LOCAL_ADDRESS}/api/chat`, { message: 'hello' })
       .then((response) => setMessage(response.data.message))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
   return (
     <Div style={styles.container}>
-      <Span style={styles.text}>Welcome to Expo + Next.js 👋</Span>
-      <Br />
-      <Div style={styles.subMessage}>
-        sub message
-        <Br />
-        another line
-        <Div style={styles.nestedDiv}>
-          {message}
-        </Div>
-      </Div>
+      <Div style={styles.text}>Welcome to Expo + Next.js 👋</Div>
+      <Div>{message}</Div>
     </Div>
   );
 }

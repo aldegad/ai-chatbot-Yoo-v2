@@ -19,7 +19,8 @@
     "typescript": "^5.5.4"
   },
   "scripts": {
-    "start": "next dev",
+    "ifConfig": "ifconfig | grep inet",
+    "dev": "next dev -H 0.0.0.0",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
