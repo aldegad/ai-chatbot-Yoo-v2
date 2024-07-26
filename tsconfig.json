@@ -38,13 +38,20 @@
         "theme/*"
       ]
     },
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "pages/_document.js"  ],
+    "**/*.tsx",
+    "pages/_document.js",
+    ".next/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ],

@@ -6,8 +6,8 @@ import appTheme from 'theme';
 
 export default function App() {
   return (
-    <NextNative theme={appTheme}>
-      <NextJsPage />
-    </NextNative>
+  <NextNative theme={appTheme}>
+    <NextJsPage />
+  </NextNative>
   );
 }

@@ -1,4 +1,6 @@
 {
   "name": "ai-chatbot-yoo-v2",
-  "slug": "ai-chatbot-yoo-v2"
+  "slug": "ai-chatbot-yoo-v2",
+  "scheme": "ai-chatbot-yoo-v2",
+  "main": "expo-router/entry"
 }

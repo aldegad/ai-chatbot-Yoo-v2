@@ -1,17 +1,19 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import Div from '@local_modules/tags/Div';
 import H1 from '@local_modules/tags/H1';
 import { color } from 'theme';
-import { Link } from 'expo-router';
+import Button from '@local_modules/tags/Button';
+import Input from '@local_modules/tags/Input';
 
 export default function App() {
+
   return (
     <Div style={styles.container}>
-      <Link href="/chat">
-        <H1 style={styles.text}>Your AI. Yoo</H1>
-      </Link>
-      {/* <Button style={styles.loginButton}>login</Button> */}
+      <ScrollView>
+
+      </ScrollView>
+      <Input/>
     </Div>
   );
 }
