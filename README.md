@@ -2,16 +2,55 @@
 이 프로젝트는 초기 단계입니다. 앱과 웹을 동시에 서비스하기 위해 Expo와 Next.js를 통합한 프로젝트를 구축하고 있습니다.
 </div>
 
-### AI Chatbot Project
+## 프로젝트 설명
 
-In the realm of modern technology, emerges an AI chatbot named Yoo, designed to excel in conversation and memory. Yoo is crafted to operate seamlessly across various platforms using Expo and Next.js, leveraging HTML-like tags for enhanced SSR and semantic advantages. Yoo aims to transcend the ordinary boundaries of artificial intelligence, becoming a digital companion capable of profound interactions and remarkable memory retention. At its core lies a conversation engine powered by advanced natural language processing, enabling Yoo to generate human-like responses. Complementing this is a sophisticated memory module that recalls previous interactions, adding a personal touch to each conversation. Yoo's interface, built with HTML-like tags, ensures optimal semantics and accessibility, making it an approachable and engaging entity. The synergy of Expo and Next.js provides Yoo with robust cross-platform capabilities and the benefits of server-side rendering, enhancing performance and user experience. Yoo stands as a testament to the fusion of vision, technology, and creativity in AI, continually learning and evolving to redefine digital companionship and set new standards in AI-driven conversations.
+AI 챗봇 Yoo는 다양한 플랫폼에서 원활하게 작동하도록 Expo와 Next.js를 사용하여 개발되었습니다. HTML 유사 태그를 활용해 서버 사이드 렌더링(SSR)과 의미론적 장점을 제공합니다. Yoo는 대화와 기억 기능에서 뛰어난 성능을 발휘하도록 설계되었습니다.
 
-All code and assets related to Yoo are owned by Suhong Kim (nickname: aldegad). Yoo may not be used, modified, or distributed without permission. All rights to Yoo are reserved by Suhong Kim.
+Yoo의 핵심은 고급 자연어 처리(NLP)를 기반으로 한 대화 엔진으로, 사람과 같은 응답을 생성합니다. 또한, 이전 대화를 기억하는 메모리 모듈을 통해 각 대화에 개인적인 터치를 더합니다. HTML 유사 태그로 구성된 인터페이스는 최적의 의미와 접근성을 보장하여 사용자에게 친근하고 매력적인 경험을 제공합니다.
 
-현대 기술의 영역에서 등장한 AI 챗봇 Yoo는 대화와 기억에서 탁월함을 발휘하도록 설계되었습니다. Yoo는 Expo와 Next.js를 사용하여 다양한 플랫폼에서 원활하게 작동하며, HTML과 같은 태그를 활용해 향상된 SSR과 의미론적 이점을 제공합니다. Yoo는 인공지능의 평범한 경계를 초월하여 깊이 있는 상호작용과 놀라운 기억 유지 능력을 갖춘 디지털 동반자가 되는 것을 목표로 합니다. Yoo의 핵심에는 고급 자연어 처리가 적용된 대화 엔진이 있어 사람과 같은 응답을 생성할 수 있습니다. 이를 보완하는 정교한 메모리 모듈은 이전의 상호작용을 기억하여 각 대화에 개인적인 터치를 더합니다. HTML과 같은 태그로 구축된 Yoo의 인터페이스는 최적의 의미와 접근성을 보장하여 친근하고 매력적인 존재로 느껴지게 합니다. Expo와 Next.js의 시너지는 Yoo에게 견고한 크로스 플랫폼 기능과 서버사이드 렌더링의 이점을 제공하여 성능과 사용자 경험을 향상시킵니다. Yoo는 AI에서 비전, 기술, 창의성의 융합을 증명하며, 디지털 동반자의 본질을 재정의하고 AI 기반 대화의 새로운 표준을 세우기 위해 계속 학습하고 발전합니다.
+Expo와 Next.js의 결합으로 Yoo는 강력한 크로스 플랫폼 기능과 서버사이드 렌더링의 이점을 누릴 수 있습니다. 이는 성능과 사용자 경험을 크게 향상시킵니다. Yoo는 AI 대화의 새로운 표준을 세우기 위해 지속적으로 학습하고 발전합니다.
 
-Yoo에 관련된 모든 코드와 자산은 김수홍(nickname: aldegad)에게 소유권이 있습니다. Yoo는 허가 없이 사용, 수정, 배포할 수 없습니다. Yoo에 대한 모든 권리는 김수홍에게 있습니다.
+Yoo와 관련된 모든 코드와 자산은 김수홍(nickname: aldegad)에게 소유권이 있습니다. Yoo는 허가 없이 사용, 수정, 배포할 수 없습니다. 모든 권리는 김수홍에게 있습니다.
 
+## 구성 요소
+
+기억을 오래할 수 있는 챗봇 AI를 만들기 위해서는 여러 가지 기술을 결합해야 합니다. Claude 3.5 Sonnet API와 함께, 장기 기억 저장을 위해 벡터 스토어를 사용할 수 있습니다. 벡터 스토어는 임베딩 벡터를 저장하고 검색하는 데 사용되며, 사용자와의 상호작용 기록을 효과적으로 관리할 수 있습니다. 아래는 기억을 오래할 수 있는 챗봇을 구축하기 위한 주요 구성 요소와 방법입니다:
+
+### LLM (Large Language Model)
+
+**Claude 3.5 Sonnet API**
+
+- **설명**: Claude 3.5 Sonnet API는 챗봇의 자연어 처리와 이해, 대화 생성을 담당하는 대규모 언어 모델입니다.
+- **이유**: 이 모델은 고급 자연어 처리 능력을 통해 사람과 유사한 대화를 생성할 수 있어, 사용자와의 상호작용을 더욱 자연스럽고 효율적으로 만듭니다.
+
+### 벡터 스토어
+
+**Pinecone**
+
+- **설명**: Pinecone은 고성능 벡터 데이터베이스로, 임베딩된 데이터를 효율적으로 저장하고 검색할 수 있습니다. 대규모 벡터 데이터를 관리하고 빠르게 검색할 수 있는 기능을 제공합니다.
+- **이유**: 벡터 스토어는 사용자와의 대화 기록을 임베딩 벡터로 변환하여 저장함으로써 필요한 정보를 빠르게 검색하고 활용할 수 있습니다. 이를 통해 챗봇은 사용자와의 과거 대화를 기억하고 적절히 응답할 수 있습니다.
+- **대안**: Pinecone 외에도 FAISS와 같은 벡터 스토어를 사용할 수 있습니다.
+
+### 데이터베이스
+
+**MongoDB**
+
+- **설명**: MongoDB는 NoSQL 데이터베이스로, 유연한 스키마 디자인과 높은 성능을 제공합니다. 구조화되지 않은 데이터를 효과적으로 저장하고 관리할 수 있습니다.
+- **이유**: MongoDB는 사용자 프로필, 선호도, 이력 등을 저장하는 데 유용하며, 다양한 데이터 형식을 유연하게 처리할 수 있습니다. 또한 확장성이 뛰어나 프로젝트의 성장에 맞춰 쉽게 확장할 수 있습니다.
+
+### 메모리 관리 시스템
+
+**단기 및 장기 메모리 관리**
+
+- **설명**: 단기 메모리는 현재 세션 동안의 정보를 저장하고, 장기 메모리는 과거 대화와 상호작용 데이터를 저장합니다. 이를 통해 AI 챗봇은 지속적인 기억을 유지하며, 사용자와의 상호작용을 개인화할 수 있습니다.
+- **이유**: 단기 메모리와 장기 메모리 시스템을 결합함으로써 챗봇은 사용자와의 대화 맥락을 이해하고, 과거의 대화를 기반으로 보다 의미 있는 응답을 생성할 수 있습니다.
+
+## 구현 단계
+
+1. **임베딩 생성**: 사용자의 입력 데이터를 벡터 형식으로 변환합니다.
+2. **벡터 저장**: 변환된 임베딩 벡터를 벡터 스토어(Pinecone)에 저장합니다.
+3. **대화 관리**: 사용자의 입력을 처리하고 적절한 응답을 생성하는 대화 관리 시스템을 구현합니다.
+4. **정보 검색 및 업데이트**: 벡터 스토어와 데이터베이스를 사용하여 필요한 정보를 검색하고, 새로운 정보를 추가 및 업데이트합니다.
 
 ## 설치 및 설정
 
