@@ -1,13 +1,9 @@
 import React from 'react';
-import { Text, TextProps } from 'react-native';
-
-type SpanProps = TextProps & {
-  children: React.ReactNode;
-};
-
+import { Text, TextStyle } from 'react-native';
+import { SpanProps } from '@local_modules/tags/Span/Span.type';
 
 const Span = ({ children, style }: SpanProps) => {
-  return <Text style={style}>{children}</Text>;
+  return <Text style={style as TextStyle}>{children}</Text>;
 };
 
 export default Span;

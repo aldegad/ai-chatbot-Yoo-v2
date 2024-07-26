@@ -30,6 +30,9 @@
       ],
       "@env": [
         "env.local.ts"
+      ],
+      "@assets/*": [
+        "assets/*"
       ]
     },
     "incremental": true

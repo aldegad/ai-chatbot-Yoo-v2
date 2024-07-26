@@ -1,9 +1,5 @@
 import React from 'react';
-
-type SpanProps = {
-  children: React.ReactNode;
-  style?: React.CSSProperties;
-};
+import { SpanProps } from '@local_modules/tags/Span/Span.type';
 
 const Span = ({ children, style }: SpanProps) => {
   return <span style={style}>{children}</span>;

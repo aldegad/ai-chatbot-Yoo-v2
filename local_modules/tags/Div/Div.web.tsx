@@ -1,4 +1,5 @@
 import React, { isValidElement, cloneElement, useMemo, ReactNode } from 'react';
+import { DivProps } from '@local_modules/tags/Div/Div.type';
 import Span from '../Span';
 
 const wrapTextNodes = (children: ReactNode): ReactNode => {
@@ -13,11 +14,6 @@ const wrapTextNodes = (children: ReactNode): ReactNode => {
     }
     return child;
   });
-};
-
-type DivProps = {
-  children: ReactNode;
-  style?: React.CSSProperties;
 };
 
 const Div = ({ children, style }: DivProps) => {

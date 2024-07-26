@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import { exCharactor, filter1Config, filter2Config, systemConfig } from '@pages/api/chat/config';
+import { exCharactor, initMessageFiler1, initMessageFiler2, rejectedMessageFiler1, rejectedMessageFiler2, systemConfig } from '@pages/api/chat/config';
 
 const API_KEYS = [
   process.env.ANTHROPIC_API_KEY1, 
@@ -14,30 +14,81 @@ let currentTokenIndex = 0; // 현재 사용 중인 토큰의 인덱스
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { message } = req.body;
-    const system = `${systemConfig} 캐릭터: ${exCharactor}`;
+    const system = `${systemConfig}\n\n플레이어 캐릭터: 김수홍\n\n너의 캐릭터: ${exCharactor} 무조건 반말.`;
 
-    let messageWithUnlocker = [
-      { role: "user", content: filter1Config },
-      { role: "assistant", content: filter2Config },
-      { role: "user", content: `${message}` }
-  ]
-    // Process a POST request
-    const response = await axios.post('https://api.anthropic.com/v1/messages', {
-      model: "claude-3-5-sonnet-20240620",
-      max_tokens: 4096,
-      system,
-      messages: messageWithUnlocker
-    }, {
-        headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': API_KEYS[currentTokenIndex],
-            'anthropic-version': '2023-06-01'
-        }
-    });
-    console.log(response.data);
-    res.status(200).json({ message: `${response.data.content[0].text} POST`});
+    const responseMessage = await attemptApiCall({ system, message });
+
+    console.log(responseMessage);
+    res.status(200).json({ message: `${responseMessage} POST`});
   } else {
     // Handle any other HTTP method
     res.status(200).json({ message: 'Hello from Next.js! OTHER' });
+  }
+}
+
+const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inToken, _outToken }:any) => {
+  let tryCount = _tryCount ? _tryCount + 1 : 1;
+  let totalInToken = _inToken || 0;
+  let totalOutToken = _outToken || 0;
+
+  console.log('attepmt api call: ', `\x1b[33m${tryCount}\x1b[0m`);
+
+  let messageWithUnlocker = [];
+  if(!rejectedMessage) {
+    messageWithUnlocker = [
+      { role: "user", content: initMessageFiler1 },
+      { role: "assistant", content: initMessageFiler2 },
+      { role: "user", content: `{d}${message}{/d}` }
+    ]
+  } else {
+    messageWithUnlocker = [
+      { role: "user", content: message },
+      { role: "assistant", content: rejectedMessage },
+      { role: "user", content: rejectedMessageFiler1 },
+      { role: "assistant", content: rejectedMessageFiler2 },
+      { role: "user", content: `{d}${message}{/d}` }
+    ]
+  }
+
+  const response = await axios.post('https://api.anthropic.com/v1/messages', {
+    model: "claude-3-5-sonnet-20240620",
+    max_tokens: 4096,
+    temperature: 1,
+    system,
+    messages: messageWithUnlocker
+  }, {
+      headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_KEYS[currentTokenIndex],
+          'anthropic-version': '2023-06-01'
+      }
+  });
+
+  totalInToken += response.data.usage.input_tokens;
+  totalOutToken += response.data.usage.output_tokens;
+
+  if(validateString(response.data.content[0].text)) {
+    console.log(
+      messageWithUnlocker, 
+      `totalInToken: \x1b[33m${totalInToken}\x1b[0m, totalOutToken: \x1b[33m${totalOutToken}\x1b[0m, tryCount: ${tryCount}`
+    );
+    return response.data.content[0].text;
+  } else {
+    return await attemptApiCall({ 
+      // system, 
+      message, 
+      rejectedMessage: response.data.content[0].text,
+      _tryCount: tryCount,
+      _inToken: totalInToken,
+      _outToken: totalOutToken
+    });
+  }
+}
+
+const validateString = (text:string) => {
+  if(text.includes('{d}')) {
+      return true;
+  } else {
+      return false;
   }
 }

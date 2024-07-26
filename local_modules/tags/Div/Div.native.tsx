@@ -1,11 +1,7 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { splitStyles, applyTextStylesRecursively } from '../styleUtils';
-
-type DivProps = {
-  children: ReactNode;
-  style?: React.CSSProperties;
-};
+import { splitStyles, applyTextStylesRecursively } from '@local_modules/tags/styleUtils';
+import { DivProps } from '@local_modules/tags/Div/Div.type';
 
 const Div = ({ children, style }:DivProps) => {
   const flattenedStyle = StyleSheet.flatten(style);

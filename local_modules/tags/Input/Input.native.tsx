@@ -9,7 +9,6 @@ const Input = ({
   onEnter,
   ...inputProps
 }: InputProps) => {
-  console.log(styles.input, style);
   const onInputChange = useCallback((e:any) => {
     onChange?.({
       native: e,
