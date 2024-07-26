@@ -1,12 +1,10 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import Div from '@local_modules/tags/Div';
-import H1 from '@local_modules/tags/H1';
-import { color } from 'theme';
-import Button from '@local_modules/tags/Button';
+import Button from "@local_modules/tags/Button";
+import Div from "@local_modules/tags/Div";
+import H1 from "@local_modules/tags/H1";
+import { color } from "@theme/index";
+import { StyleSheet } from "react-native";
 
-export default function App() {
-
+const Character = () => {
   return (
     <Div style={styles.container}>
       <H1 style={styles.text}>Your AI. Yoo</H1>
@@ -14,6 +12,8 @@ export default function App() {
     </Div>
   );
 }
+
+export default Character;
 
 const styles = StyleSheet.create({
   container: {

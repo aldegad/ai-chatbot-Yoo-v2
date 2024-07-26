@@ -13,5 +13,16 @@ export const normalizeStyles = StyleSheet.create({
     padding: 8,
     fontSize: 16,
     borderRadius: 8
+  },
+  button: {
+    backgroundColor: 'white',
+    fontWeight: 600,
+    fontSize: 16,
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderRadius: 8,
+    cursor: 'pointer'
   }
 });

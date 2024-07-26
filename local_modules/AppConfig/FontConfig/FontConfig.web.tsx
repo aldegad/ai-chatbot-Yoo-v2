@@ -20,7 +20,7 @@ const FontConfig = () => {
 
     // Add default font-family rule
     const defaultFontFamily = `
-      body {
+      body, button, input {
         font-family: 'Pretendard', sans-serif;
       }
     `;
