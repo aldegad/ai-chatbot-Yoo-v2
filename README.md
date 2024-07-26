@@ -293,7 +293,7 @@ export const appTheme = {
 export default appTheme;
 ```
 
-#### pages/index.tsx(ex)
+#### pages/index.tsx (예시)
 ```typescript
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
