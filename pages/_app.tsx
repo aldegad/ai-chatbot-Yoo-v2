@@ -1,5 +1,5 @@
 import Head from "next/head";
-import '../globals.css';
+import '@theme/globals.css';
 import { AppProps } from "next/app";
 import NextNative from "@local_modules/NextNative";
 import appTheme from 'theme';

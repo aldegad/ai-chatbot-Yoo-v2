@@ -16,7 +16,6 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ theme, children }) => {
   return (
     <ThemeContext.Provider value={theme}>
-      <FontConfig/>
       {children}
     </ThemeContext.Provider>
   );
