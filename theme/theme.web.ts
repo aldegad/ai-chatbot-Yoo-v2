@@ -1,5 +1,4 @@
 export const appTheme = {
-  // 이건 진짜... 어떻게 할 수가 없다.
   font: {
     '100': './assets/fonts/Pretendard-Thin.otf',
     '200': './assets/fonts/Pretendard-ExtraLight.otf',

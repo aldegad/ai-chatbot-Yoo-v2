@@ -91,21 +91,25 @@ npm run svg:expo
 `metro.config.js` 파일을 생성하거나 수정하여 `react-native-svg-transformer`를 설정합니다:
 
 ```javascript
-const { getDefaultConfig } = require('expo/metro-config');
+const { getDefaultConfig } = require("expo/metro-config");
 
-module.exports = (async () => {
-  const {
-    resolver: { sourceExts, assetExts },
-  } = await getDefaultConfig(__dirname);
-  return {
-    transformer: {
-      babelTransformerPath: require.resolve('react-native-svg-transformer'),
-    },
-    resolver: {
-      assetExts: assetExts.filter(ext => ext !== 'svg'),
-      sourceExts: [...sourceExts, 'svg'],
-    },
+module.exports = (() => {
+
+  const config = getDefaultConfig(__dirname);
+
+  const { transformer, resolver } = config;
+
+  config.transformer = {
+    ...transformer,
+    babelTransformerPath: require.resolve("react-native-svg-transformer"),
   };
+  config.resolver = {
+    ...resolver,
+    assetExts: resolver.assetExts.filter((ext) => ext !== "svg"),
+    sourceExts: [...resolver.sourceExts, "svg"],
+  };
+
+  return config;
 })();
 ```
 
@@ -124,46 +128,39 @@ npm run svg:nextjs
 `next.config.js` 파일을 생성하거나 수정하여 Webpack 설정을 추가합니다:
 
 ```javascript
-const { withExpo } = require('@expo/next-adapter');
-const withTM = require('next-transpile-modules')([
-  'react-native',
-  'react-native-web',
-  '@react-native/assets-registry'
-]);
-const path = require('path');
+const { withExpo } = require("@expo/next-adapter");
+const path = require('path'); // 추가된 부분
 
-const nextConfig = withTM(
-  withExpo({
-    reactStrictMode: true,
-    swcMinify: true,
-    transpilePackages: [
-      'react-native',
-      'expo',
-      Add more React Native / Expo packages here...
-    ],
-    experimental: {
-      forceSwcTransforms: true,
-    },
-    webpack(config) {
-      config.module.rules.push({
-        test: /\.svg$/i,
-        issuer: /\.[jt]sx?$/,
-        use: ['@svgr/webpack'],
-      });
-
-      // Add alias configuration
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        '@assets': path.resolve(__dirname, 'assets'),
-        '@local_modules': path.resolve(__dirname, 'local_modules'),
-      };
-
-      return config;
-    },
-  })
-);
+/** @type {import('next').NextConfig} */
+const nextConfig = withExpo({
+  reactStrictMode: false,
+  swcMinify: true,
+  transpilePackages: [
+    "react-native",
+    "expo",
+    // Add more React Native / Expo packages here...
+  ],
+  experimental: {
+    forceSwcTransforms: true,
+  },
+  webpack(config, { isServer }) {
+    // nextjs에서 네이티브 페이지 무시
+    config.module.rules.push({
+      test: /\.native\.tsx?$/,
+      use: 'ignore-loader'
+    });
+    // nextjs svg파일을 tsx파일로 인식해서 보이게 하기
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    });
+    return config;
+  }
+});
 
 module.exports = nextConfig;
+
 ```
 
 ### 5. TypeScript 설정 (선택 사항)
@@ -183,13 +180,14 @@ declare module '*.svg' {
 프로젝트의 파일 구조가 설정된 경로와 일치하는지 확인합니다:
 
 ```
-/assets
-  /svg
-    logo.svg
+/public/assets
+  /imgs
+  /fonts
 /components
   images.tsx
 /pages
   index.tsx
+/theme
 ```
 
 ### 7. 코드 수정
@@ -199,68 +197,11 @@ declare module '*.svg' {
 #### `components/images.tsx`
 
 ```typescript
-import SvgLogo from '@assets/svg/logo.svg';
+import SvgLogo from '@assets/imgs/logo.svg';
 
 export {
   SvgLogo
 };
-```
-
-#### `pages/index.tsx`
-
-```typescript
-import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Div from '@local_modules/tags/Div';
-import axios from 'axios';
-import env from '@env';
-import Input from '@local_modules/tags/Input';
-import AppConfig from '@local_modules/AppConfig';
-import { SvgLogo } from '../components/images';
-
-export default function App() {
-  const [message, setMessage] = useState<string>('');
-  const [response, setResponse] = useState<string>('');
-  const svgRef = useRef(null);
-
-  const onEnter = (e: any) => {
-    axios.post(`${env.LOCAL_ADDRESS}/api/chat`, { message: message })
-      .then((response) => setResponse(response.data.message))
-      .catch((error) => console.error('Error fetching data:', error));
-  };
-
-  useEffect(() => {
-    if (svgRef.current) {
-      const width = svgRef.current.width.baseVal.value;
-      const height = svgRef.current.height.baseVal.value;
-    }
-  }, []);
-
-  return (
-    <AppConfig>
-      <Div style={styles.container}>
-        <Text style={styles.text}>Welcome to Expo + Next.js 👋</Text>
-        <Div style={styles.text}>{response}</Div>
-        <Input value={message} onChange={(e) => setMessage(e.instance.value)} onEnter={onEnter} />
-        <SvgLogo ref={svgRef} />
-      </Div>
-    </AppConfig>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center', // 웹과 네이티브 모두 가운데 정렬
-    fontSize: 20,
-  },
-  text: {
-    margin: 10,
-    fontFamily: 'Bold',
-  },
-});
 ```
 
 #### App.tsx (Expo)
@@ -299,9 +240,13 @@ export default function App({ Component, pageProps }:AppProps) {
 }
 ```
 
-#### App.theme.tsx
+#### theme/theme.tsx
+앱의 테마와 font등을 설정합니다.
 ```typescript
+import { Platform } from "react-native"
+
 export const appTheme = {
+  ...(Platform.OS === 'web' ? require('./theme.web').default : require('./theme.native').default),
   color: {
     primary: '#8A6BF4',
     text: '#313131'
@@ -311,7 +256,44 @@ export const appTheme = {
 export type AppTheme = typeof appTheme;
 ```
 
-#### index.tsx(ex)
+theme/theme.native.tsx
+```typescript
+const appTheme = {
+  font: {
+    '100': require('public/assets/fonts/Pretendard-Thin.otf'),
+    '200': require('public/assets/fonts/Pretendard-ExtraLight.otf'),
+    '300': require('public/assets/fonts/Pretendard-Light.otf'),
+    '400': require('public/assets/fonts/Pretendard-Regular.otf'),
+    '500': require('public/assets/fonts/Pretendard-Medium.otf'),
+    '600': require('public/assets/fonts/Pretendard-SemiBold.otf'),
+    '700': require('public/assets/fonts/Pretendard-Bold.otf'),
+    '800': require('public/assets/fonts/Pretendard-ExtraBold.otf'),
+    '900': require('public/assets/fonts/Pretendard-Black.otf')
+  }
+}
+export default appTheme;
+```
+
+theme/theme.web.tsx
+```typescript
+export const appTheme = {
+  font: {
+    '100': './assets/fonts/Pretendard-Thin.otf',
+    '200': './assets/fonts/Pretendard-ExtraLight.otf',
+    '300': './assets/fonts/Pretendard-Light.otf',
+    '400': './assets/fonts/Pretendard-Regular.otf',
+    '500': './assets/fonts/Pretendard-Medium.otf',
+    '600': './assets/fonts/Pretendard-SemiBold.otf',
+    '700': './assets/fonts/Pretendard-Bold.otf',
+    '800': './assets/fonts/Pretendard-ExtraBold.otf',
+    '900': './assets/fonts/Pretendard-Black.otf'
+  }
+}
+
+export default appTheme;
+```
+
+#### pages/index.tsx(ex)
 ```typescript
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';

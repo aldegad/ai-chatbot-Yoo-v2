@@ -1,5 +1,4 @@
 const appTheme = {
-  // 이건 진짜... 어떻게 할 수가 없다.
   font: {
     '100': require('public/assets/fonts/Pretendard-Thin.otf'),
     '200': require('public/assets/fonts/Pretendard-ExtraLight.otf'),
