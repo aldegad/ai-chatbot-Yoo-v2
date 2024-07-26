@@ -1,4 +1,4 @@
-import { InputProps } from '@local_modules/tags/Input/Input.config';
+import { InputProps } from '@local_modules/tags/Input/Input.types';
 import { Platform } from 'react-native';
 
 const Input = Platform.select({

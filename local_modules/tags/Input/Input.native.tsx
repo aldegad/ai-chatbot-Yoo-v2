@@ -1,4 +1,5 @@
-import { InputProps, styles } from '@local_modules/tags/Input/Input.config';
+import { InputProps } from '@local_modules/tags/Input/Input.types';
+import { normalizeStyles } from '@local_modules/tags/normalize';
 import { useCallback } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
@@ -19,7 +20,7 @@ const Input = ({
   }, [onChange]);
 
   return <TextInput 
-    style={[styles.input, style]}
+    style={[normalizeStyles.input, style]}
     onChange={onInputChange}
     onSubmitEditing={e => onEnter()}
     {...inputProps}></TextInput>;

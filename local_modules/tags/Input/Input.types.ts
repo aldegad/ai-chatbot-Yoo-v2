@@ -27,16 +27,3 @@ export type InputOnChange = {
     value: any;
   }
 }
-
-export const styles = StyleSheet.create({
-  input: {
-    borderColor: '#dfdfdf',
-    borderWidth: 1,
-    height: 38,
-    width: 148,
-    textAlign: 'left',
-    padding: 8,
-    fontSize: 16,
-    borderRadius: 8
-  }
-});

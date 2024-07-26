@@ -3,7 +3,7 @@ const path = require('path'); // 추가된 부분
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withExpo({
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   transpilePackages: [
     "react-native",

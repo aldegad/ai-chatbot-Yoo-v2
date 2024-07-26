@@ -1,4 +1,5 @@
-import { InputProps, styles } from '@local_modules/tags/Input/Input.config';
+import { InputProps } from '@local_modules/tags/Input/Input.types';
+import { normalizeStyles } from '@local_modules/tags/normalize';
 import React, { useCallback } from 'react';
 
 const Input = ({ 
@@ -29,7 +30,7 @@ const Input = ({
   }, [onChange]);
   
   return <input 
-    style={{ ...styles.input, ...style }}
+    style={{ ...normalizeStyles.input, ...style }}
     onChange={onInputChange}
     onKeyUp={onInputEnter}
     {...inputProps}></input>;

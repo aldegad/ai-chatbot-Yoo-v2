@@ -151,7 +151,7 @@ const nextConfig = withTM(
         use: ['@svgr/webpack'],
       });
 
-      Add alias configuration
+      // Add alias configuration
       config.resolve.alias = {
         ...config.resolve.alias,
         '@assets': path.resolve(__dirname, 'assets'),
@@ -255,12 +255,111 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center', 웹과 네이티브 모두 가운데 정렬
+    textAlign: 'center', // 웹과 네이티브 모두 가운데 정렬
     fontSize: 20,
   },
   text: {
     margin: 10,
     fontFamily: 'Bold',
   },
+});
+```
+
+#### App.tsx (Expo)
+```typescript
+import React from 'react';
+import NextJsPage from './pages'; // Next.js 페이지를 가져옵니다
+import NextNative from '@local_modules/NextNative';
+import { appTheme } from 'App.theme';
+
+export default function App() {
+  return (
+    <NextNative theme={appTheme}>
+      <NextJsPage />
+    </NextNative>
+  );
+}
+```
+
+#### _app.tsx (nextjs)
+```typescript
+import Head from "next/head";
+import '../globals.css';
+import { AppProps } from "next/app";
+import { appTheme } from "App.theme";
+import NextNative from "@local_modules/NextNative";
+
+export default function App({ Component, pageProps }:AppProps) {
+  return (
+    <NextNative theme={appTheme}>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <Component {...pageProps} />
+    </NextNative>
+  );
+}
+```
+
+#### App.theme.tsx
+```typescript
+export const appTheme = {
+  color: {
+    primary: '#8A6BF4',
+    text: '#313131'
+  }
+}
+
+export type AppTheme = typeof appTheme;
+```
+
+#### index.tsx(ex)
+```typescript
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import Div from '@local_modules/tags/Div';
+import axios from 'axios';
+import env from '@env';
+import Input from '@local_modules/tags/Input';
+import { SvgLogo } from '@components/images';
+import H1 from '@local_modules/tags/H1';
+import { AppTheme } from 'App.theme';
+import { useTheme } from '@local_modules/AppConfig/ThemeContext';
+
+export default function App() {
+  const { color } = useTheme<AppTheme>();
+
+  const [message, setMessage] = useState<string>('');
+  const [response, setResponse] = useState<string>('');
+
+  const onEnter = (e:any) => {
+    axios.post(`${env.LOCAL_ADDRESS}/api/chat`, { message: message })
+    .then((response) => setResponse(response.data.message))
+    .catch((error) => console.error('Error fetching data:', error));
+  }
+  console.log(color);
+  return (
+    <Div style={styles.container}>
+      <H1 style={{ fontWeight: 700, color: color.primary }}>Your AI. Yoo</H1>
+      <Div>test</Div>
+      <Div style={{ backgroundColor: 'red', width: 100, minHeight: 0 }}>{response}</Div>
+      <Input value={message} onChange={(e) => setMessage(e.instance.value)} onEnter={onEnter}></Input>
+      <SvgLogo/>
+    </Div>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center', // 웹과 네이티브 모두 가운데 정렬
+    fontSize: 20,
+  },
+  text: {
+    margin: 0,
+    fontFamily: 'Bold'
+  }
 });
 ```

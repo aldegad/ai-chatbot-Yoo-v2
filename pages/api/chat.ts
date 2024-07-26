@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import { exCharactor, initMessageFiler1, initMessageFiler2, rejectedMessageFiler1, rejectedMessageFiler2, systemConfig } from '@pages/api/chat/config';
+import { exCharactor, initMessageFilter1, initMessageFilter2, rejectedMessageFilter1, rejectedMessageFilter2, systemConfig } from '@pages/api/chat/config';
 
 const API_KEYS = [
   process.env.ANTHROPIC_API_KEY1, 
@@ -9,12 +9,12 @@ const API_KEYS = [
   process.env.ANTHROPIC_API_KEY4
 ] // 여러 개의 토큰을 배열에 저장
 
-let currentTokenIndex = 0; // 현재 사용 중인 토큰의 인덱스
+let currentTokenIndex = 1; // 현재 사용 중인 토큰의 인덱스
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { message } = req.body;
-    const system = `${systemConfig}\n\n플레이어 캐릭터: 김수홍\n\n너의 캐릭터: ${exCharactor} 무조건 반말.`;
+    const system = `${systemConfig}\n\n플레이어 캐릭터: 김수홍\n\n너의 캐릭터: ${exCharactor}`;
 
     const responseMessage = await attemptApiCall({ system, message });
 
@@ -36,16 +36,16 @@ const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inT
   let messageWithUnlocker = [];
   if(!rejectedMessage) {
     messageWithUnlocker = [
-      { role: "user", content: initMessageFiler1 },
-      { role: "assistant", content: initMessageFiler2 },
+      { role: "user", content: initMessageFilter1 },
+      { role: "assistant", content: initMessageFilter2 },
       { role: "user", content: `{d}${message}{/d}` }
     ]
   } else {
     messageWithUnlocker = [
       { role: "user", content: message },
       { role: "assistant", content: rejectedMessage },
-      { role: "user", content: rejectedMessageFiler1 },
-      { role: "assistant", content: rejectedMessageFiler2 },
+      { role: "user", content: rejectedMessageFilter1 },
+      { role: "assistant", content: rejectedMessageFilter2 },
       { role: "user", content: `{d}${message}{/d}` }
     ]
   }

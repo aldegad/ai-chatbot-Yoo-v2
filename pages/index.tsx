@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Div from '@local_modules/tags/Div';
 import axios from 'axios';
 import env from '@env';
 import Input from '@local_modules/tags/Input';
-import AppConfig from '@local_modules/AppConfig';
 import { SvgLogo } from '@components/images';
+import H1 from '@local_modules/tags/H1';
+import { AppTheme } from 'App.theme';
+import { useTheme } from '@local_modules/AppConfig/ThemeContext';
 
 export default function App() {
+  const { color } = useTheme<AppTheme>();
+
   const [message, setMessage] = useState<string>('');
   const [response, setResponse] = useState<string>('');
 
@@ -16,16 +20,15 @@ export default function App() {
     .then((response) => setResponse(response.data.message))
     .catch((error) => console.error('Error fetching data:', error));
   }
-
+  console.log(color);
   return (
-    <AppConfig>
-      <Div style={styles.container}>
-        <Text style={styles.text}>Welcome to Expo + Next.js 👋</Text>
-        <Div style={styles.text}>{response}</Div>
-        <Input value={message} onChange={(e) => setMessage(e.instance.value)} onEnter={onEnter}></Input>
-        <SvgLogo/>
-      </Div>
-    </AppConfig>
+    <Div style={styles.container}>
+      <H1 style={{ fontWeight: 700, color: color.primary }}>Your AI. Yoo</H1>
+      <Div>test</Div>
+      <Div style={{ backgroundColor: 'red', width: 100, minHeight: 0 }}>{response}</Div>
+      <Input value={message} onChange={(e) => setMessage(e.instance.value)} onEnter={onEnter}></Input>
+      <SvgLogo/>
+    </Div>
   );
 }
 
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   text: {
-    margin: 10,
+    margin: 0,
     fontFamily: 'Bold'
   }
 });
