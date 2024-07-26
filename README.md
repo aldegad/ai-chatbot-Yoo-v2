@@ -1,3 +1,7 @@
+<div style="background-color: #FFF3CD; padding: 10px; border-radius: 5px;">
+이 프로젝트는 초기 단계입니다. 앱과 웹을 동시에 서비스하기 위해 Expo와 Next.js를 통합한 프로젝트를 구축하고 있습니다.
+</div>
+
 ### AI Chatbot Project
 
 In the realm of modern technology, emerges an AI chatbot named Yoo, designed to excel in conversation and memory. Yoo is crafted to operate seamlessly across various platforms using Expo and Next.js, leveraging HTML-like tags for enhanced SSR and semantic advantages. Yoo aims to transcend the ordinary boundaries of artificial intelligence, becoming a digital companion capable of profound interactions and remarkable memory retention. At its core lies a conversation engine powered by advanced natural language processing, enabling Yoo to generate human-like responses. Complementing this is a sophisticated memory module that recalls previous interactions, adding a personal touch to each conversation. Yoo's interface, built with HTML-like tags, ensures optimal semantics and accessibility, making it an approachable and engaging entity. The synergy of Expo and Next.js provides Yoo with robust cross-platform capabilities and the benefits of server-side rendering, enhancing performance and user experience. Yoo stands as a testament to the fusion of vision, technology, and creativity in AI, continually learning and evolving to redefine digital companionship and set new standards in AI-driven conversations.
@@ -18,8 +22,8 @@ Yoo에 관련된 모든 코드와 자산은 김수홍(nickname: aldegad)에게 �
 먼저, 프로젝트를 클론하고 프로젝트 디렉토리로 이동합니다:
 
 ```bash
-git clone https://github.com/your-repository.git
-cd your-repository
+git clone https://github.com/aldegad/ai-chatbot-yoo-v2.git
+cd ai-chatbot-yoo-v2
 ```
 
 ### 2. 기본 의존성 설치
