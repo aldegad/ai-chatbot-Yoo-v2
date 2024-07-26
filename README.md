@@ -233,8 +233,6 @@ export default function App() {
     if (svgRef.current) {
       const width = svgRef.current.width.baseVal.value;
       const height = svgRef.current.height.baseVal.value;
-      console.log('SVG Width:', width);
-      console.log('SVG Height:', height);
     }
   }, []);
 
@@ -337,7 +335,7 @@ export default function App() {
     .then((response) => setResponse(response.data.message))
     .catch((error) => console.error('Error fetching data:', error));
   }
-  console.log(color);
+
   return (
     <Div style={styles.container}>
       <H1 style={{ fontWeight: 700, color: color.primary }}>Your AI. Yoo</H1>

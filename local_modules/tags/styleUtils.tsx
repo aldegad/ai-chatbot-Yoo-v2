@@ -32,7 +32,7 @@ export const wrapTextNodesNative = (children: ReactNode, textStyle: TextStyle): 
       }
       const { fontWeight, ...otherStyles } = textStyle;
       const fontFamily = fontWeight || undefined;
-      console.log(fontFamily);
+
       const newStyle = [{ fontFamily }, otherStyles, child.props.style];
       const newChildren = wrapTextNodesNative(child.props.children, textStyle);
       return React.cloneElement<any>(child, { style: newStyle }, newChildren);

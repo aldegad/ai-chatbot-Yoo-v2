@@ -6,8 +6,8 @@ import env from '@env';
 import Input from '@local_modules/tags/Input';
 import { SvgLogo } from '@components/images';
 import H1 from '@local_modules/tags/H1';
-import { AppTheme } from 'App.theme';
 import { useTheme } from '@local_modules/AppConfig/ThemeContext';
+import { AppTheme } from 'theme';
 
 export default function App() {
   const { color } = useTheme<AppTheme>();
@@ -20,10 +20,10 @@ export default function App() {
     .then((response) => setResponse(response.data.message))
     .catch((error) => console.error('Error fetching data:', error));
   }
-  console.log(color);
+
   return (
     <Div style={styles.container}>
-      <H1 style={{ fontWeight: 700, color: color.primary }}>Your AI. Yoo</H1>
+      <H1 style={{ fontWeight: 300, color: color.primary }}>Your AI. Yoo</H1>
       <Div>test</Div>
       <Div style={{ backgroundColor: 'red', width: 100, minHeight: 0 }}>{response}</Div>
       <Input value={message} onChange={(e) => setMessage(e.instance.value)} onEnter={onEnter}></Input>

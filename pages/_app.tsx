@@ -1,8 +1,8 @@
 import Head from "next/head";
 import '../globals.css';
 import { AppProps } from "next/app";
-import { appTheme } from "App.theme";
 import NextNative from "@local_modules/NextNative";
+import { appTheme } from 'theme';
 
 export default function App({ Component, pageProps }:AppProps) {
   return (

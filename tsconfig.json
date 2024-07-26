@@ -32,7 +32,10 @@
         "env.local.ts"
       ],
       "@assets/*": [
-        "assets/*"
+        "public/assets/*"
+      ],
+      "@theme/*": [
+        "theme/*"
       ]
     },
     "incremental": true
@@ -41,7 +44,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/_document.js"  ],
   "exclude": [
     "node_modules"
   ],

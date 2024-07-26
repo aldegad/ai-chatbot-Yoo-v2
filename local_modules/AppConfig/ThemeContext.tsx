@@ -1,4 +1,5 @@
 // ThemeContext.tsx
+import FontConfig from '@local_modules/AppConfig/FontConfig';
 import React, { createContext, useContext, ReactNode } from 'react';
 
 export interface ThemeContextType {
@@ -15,6 +16,7 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ theme, children }) => {
   return (
     <ThemeContext.Provider value={theme}>
+      <FontConfig/>
       {children}
     </ThemeContext.Provider>
   );

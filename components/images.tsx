@@ -1,4 +1,4 @@
-import SvgLogo from '@assets/imgs/logo.svg';
+import SvgLogo from 'public/assets/imgs/logo.svg';
 
 export {
   SvgLogo
