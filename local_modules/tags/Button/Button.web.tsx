@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { ButtonProps } from '@local_modules/tags/Button/Button.type';
-import { wrapTextNodesWeb } from '@local_modules/tags/styleUtils';
+import { wrapTextNodesWeb } from '@local_modules/tags/styleUtils.web';
 import { normalizeStyles } from '@local_modules/tags/normalize';
 
 const Button = ({ children, style, onClick }: ButtonProps) => {

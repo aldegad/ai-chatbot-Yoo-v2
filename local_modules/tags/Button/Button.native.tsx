@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, GestureResponderEvent, Pressable } from 'react-native';
-import { splitStyles, wrapTextNodesNative } from '@local_modules/tags/styleUtils';
+import { splitStyles, wrapTextNodesNative } from '@local_modules/tags/styleUtils.native';
 import { ButtonProps } from '@local_modules/tags/Button/Button.type';
 import { normalizeStyles } from '@local_modules/tags/normalize';
 

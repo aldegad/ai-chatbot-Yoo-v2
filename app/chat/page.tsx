@@ -6,14 +6,11 @@ import { color } from 'theme';
 import Button from '@local_modules/tags/Button';
 import Input from '@local_modules/tags/Input';
 
-export default function App() {
+export default function Page() {
 
   return (
     <Div style={styles.container}>
-      <ScrollView>
-
-      </ScrollView>
-      <Input/>
+      holly
     </Div>
   );
 }

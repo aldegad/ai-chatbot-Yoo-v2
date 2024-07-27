@@ -1,13 +1,14 @@
 import Input from '@local_modules/tags/Input';
 import Span from '@local_modules/tags/Span';
-import React, { isValidElement, ReactNode } from 'react';
-import { Text, TextInput, TextStyle, ViewStyle } from 'react-native';
+import React, { ReactNode } from 'react';
+import { Text, TextStyle, ViewStyle } from 'react-native';
 
 const textStyles = ['fontSize', 'color', 'fontWeight', 'lineHeight', 'textAlign', 'fontFamily'];
 
 export const splitStyles = (style: any): { textStyle: TextStyle; viewStyle: ViewStyle } => {
   const textStyle: TextStyle = {};
   const viewStyle: ViewStyle = {};
+  if(!style) return { textStyle, viewStyle };
 
   Object.keys(style).forEach((key) => {
     if (textStyles.includes(key)) {
@@ -39,17 +40,4 @@ export const wrapTextNodesNative = (children: ReactNode, textStyle: TextStyle): 
     }
     return <Text style={textStyle}>{child}</Text>;
   });
-};
-
-export const wrapTextNodesWeb = (children: ReactNode): ReactNode => {
-  return React.Children.map(children, (child) => {
-    if (typeof child === 'string' && child) {
-      // 텍스트 노드인 경우 Span으로 감싸기
-      return <Span>{child}</Span>;
-    } else if (isValidElement(child)) {
-      return child;
-    } else {
-      return child;
-    }
-  });
-};
+}

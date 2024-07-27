@@ -1,7 +1,7 @@
-import React, { isValidElement, cloneElement, useMemo, ReactNode } from 'react';
+import React, { useMemo } from 'react';
 import { DivProps } from '@local_modules/tags/Div/Div.type';
-import Span from '../Span';
-import { wrapTextNodesWeb } from '@local_modules/tags/styleUtils';
+import { wrapTextNodesWeb } from '@local_modules/tags/styleUtils.web';
+// import { wrapTextNodesWeb } from '@local_modules/tags/styleUtils';
 
 const Div = ({ children, style }: DivProps) => {
   const wrappedChildren = useMemo(() => wrapTextNodesWeb(children), [children]);

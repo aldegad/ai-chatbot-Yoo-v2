@@ -13,7 +13,7 @@ const nextConfig = withExpo({
   experimental: {
     forceSwcTransforms: true,
   },
-  webpack(config, { isServer }) {
+  webpack(config) {
     // nextjs에서 네이티브 페이지 무시
     config.module.rules.push({
       test: /\.native\.tsx?$/,

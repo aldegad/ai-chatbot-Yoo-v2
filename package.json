@@ -33,6 +33,7 @@
   "scripts": {
     "ifConfig": "ifconfig | grep inet",
     "dev": "next dev -p 3001 -H 0.0.0.0",
+    "start": "next start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",

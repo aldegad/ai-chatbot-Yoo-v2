@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import { exCharactor, initMessageFilter1, initMessageFilter2, rejectedMessageFilter1, rejectedMessageFilter2, systemConfig } from '@pages/api/chat/config';
+import { exCharactor, initMessageFilter1, initMessageFilter2, rejectedMessageFilter1, rejectedMessageFilter2, systemConfig } from './config';
 
 const API_KEYS = [
   process.env.ANTHROPIC_API_KEY1, 

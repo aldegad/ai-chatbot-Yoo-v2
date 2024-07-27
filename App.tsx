@@ -1,6 +1,6 @@
 // App.tsx (Expo)
 import React from 'react';
-import NextJsPage from './pages'; // Next.js 페이지를 가져옵니다
+import NextJsPage from './app/index';
 import NextNative from '@local_modules/NextNative';
 import appTheme from 'theme';
 

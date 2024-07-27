@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { splitStyles, wrapTextNodesNative } from '@local_modules/tags/styleUtils';
+import { splitStyles, wrapTextNodesNative } from '@local_modules/tags/styleUtils.native';
 import { DivProps } from '@local_modules/tags/Div/Div.type';
 
 const Div = ({ children, style }:DivProps) => {

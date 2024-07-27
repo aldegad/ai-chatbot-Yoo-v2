@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { splitStyles, wrapTextNodesNative } from '@local_modules/tags/styleUtils';
+import { splitStyles, wrapTextNodesNative } from '@local_modules/tags/styleUtils.native';
 import { H1Props } from '@local_modules/tags/H1/H1.types';
 import { normalizeStyles } from '@local_modules/tags/normalize';
 
