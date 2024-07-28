@@ -3,9 +3,11 @@ import { StyleSheet } from "react-native";
 export const normalizeStyles = StyleSheet.create({
   input: {
     borderColor: '#dfdfdf',
+    backgroundColor: '#f2f2f2',
     borderWidth: 1,
     height: 38,
-    width: 200,
+    width: '100%',
+    minWidth: 200,
     textAlign: 'left',
     padding: 8,
     fontSize: 16,
@@ -22,6 +24,10 @@ export const normalizeStyles = StyleSheet.create({
     borderRadius: 8,
     cursor: 'pointer',
     alignItems: 'center'
+  },
+  label: {
+    fontSize: 12,
+    fontWeight: 600
   },
   h1: {
     fontSize: 30,

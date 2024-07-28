@@ -1,7 +1,7 @@
 import { InputProps } from '@local_modules/tags/Input/Input.types';
 import { normalizeStyles } from '@local_modules/tags/normalize';
 import { useCallback } from 'react';
-import { NativeSyntheticEvent, TextInput, TextInputChangeEventData } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 
 const Input = ({ 
   control, 
@@ -10,7 +10,7 @@ const Input = ({
   onEnter,
   ...inputProps
 }: InputProps) => {
-  const onInputChange = useCallback((e:NativeSyntheticEvent<TextInputChangeEventData>) => {
+  const onInputChange = useCallback((e:any) => {
     onChange?.({
       native: e,
       instance: {

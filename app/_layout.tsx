@@ -5,7 +5,7 @@ import { Stack } from 'expo-router';
 export default function Layout() {
   return (
     <NextNative theme={AppTheme}>
-      <Stack/>
+      <Stack screenOptions={{ headerShown: false }}/>
     </NextNative>
   );
 }

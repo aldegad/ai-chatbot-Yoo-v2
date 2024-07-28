@@ -1,8 +1,6 @@
 import Span from '@local_modules/tags/Span';
 import React, { ReactNode } from 'react';
 
-const textStyles = ['fontSize', 'color', 'fontWeight', 'lineHeight', 'textAlign', 'fontFamily'];
-
 export const wrapTextNodesWeb = (children: ReactNode): ReactNode => {
   return React.Children.map(children, (child) => {
     if (typeof child === 'string' && child) {

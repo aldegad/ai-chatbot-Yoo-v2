@@ -1,6 +1,6 @@
 import React from 'react';
-import { SpanProps } from '@local_modules/tags/Span/Span.type';
+import { ElementProps } from '@local_modules/tags/type';
 
-export default function WebSpan({ children, style }: SpanProps) {
+export default function WebSpan({ children, style }: ElementProps) {
   return <span style={style}>{children}</span>;
 }

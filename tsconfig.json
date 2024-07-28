@@ -25,11 +25,8 @@
       "@components/*": [
         "components/*"
       ],
-      "@pages/*": [
-        "pages/*"
-      ],
-      "@env": [
-        "env.local.ts"
+      "@clientEnv": [
+        "env.client.ts"
       ],
       "@assets/*": [
         "public/assets/*"

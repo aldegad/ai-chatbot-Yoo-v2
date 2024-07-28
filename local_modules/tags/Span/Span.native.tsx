@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TextStyle } from 'react-native';
-import { SpanProps } from '@local_modules/tags/Span/Span.type';
+import { ElementProps } from '@local_modules/tags/type';
 
-export default function NativeSpan({ children, style }: SpanProps) {
+export default function NativeSpan({ children, style }: ElementProps) {
   return <Text style={style as TextStyle}>{children}</Text>;
 }

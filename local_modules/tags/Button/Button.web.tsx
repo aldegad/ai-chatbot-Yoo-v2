@@ -1,9 +1,9 @@
 import React, { useMemo, useCallback } from 'react';
-import { ButtonProps } from '@local_modules/tags/Button/Button.type';
 import { wrapTextNodesWeb } from '@local_modules/tags/styleUtils.web';
 import { normalizeStyles } from '@local_modules/tags/normalize';
+import { ButtonElementProps } from '@local_modules/tags/type';
 
-export default function WebButton({ children, style, onClick }:ButtonProps) {
+export default function WebButton({ children, style, onClick }: ButtonElementProps) {
   const wrappedChildren = useMemo(() => wrapTextNodesWeb(children), [children]);
   
   const onButtonClick = useCallback((e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
