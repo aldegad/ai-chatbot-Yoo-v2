@@ -1,5 +1,5 @@
-import { default as NextLink } from "next/link";
+import Link, { LinkProps } from "next/link";
 
-export default function Link(props:any) {
-  return <NextLink {...props}/>
+export default function WebLink(props:LinkProps) {
+  return <Link {...props}/>
 }

@@ -1,9 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const normalizeStyles = StyleSheet.create({
-  h1: {
-    fontSize: 30
-  },
   input: {
     borderColor: '#dfdfdf',
     borderWidth: 1,
@@ -25,5 +22,14 @@ export const normalizeStyles = StyleSheet.create({
     borderRadius: 8,
     cursor: 'pointer',
     alignItems: 'center'
+  },
+  h1: {
+    fontSize: 30,
+    fontWeight: 600,
+    flexDirection: 'row'
+  },
+  p: {
+    fontSize: 14,
+    flexDirection: 'row'
   }
 });

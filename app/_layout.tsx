@@ -1,7 +1,11 @@
+import NextNative from '@local_modules/NextNative';
+import AppTheme from '@theme/index';
 import { Stack } from 'expo-router';
 
 export default function Layout() {
   return (
-    <Stack/>
+    <NextNative theme={AppTheme}>
+      <Stack/>
+    </NextNative>
   );
 }

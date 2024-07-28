@@ -1,7 +1,6 @@
 import Input from '@local_modules/tags/Input';
-import Span from '@local_modules/tags/Span';
-import React, { ReactNode } from 'react';
-import { Text, TextStyle, ViewStyle } from 'react-native';
+import React, { ReactNode, useMemo } from 'react';
+import { StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
 
 const textStyles = ['fontSize', 'color', 'fontWeight', 'lineHeight', 'textAlign', 'fontFamily'];
 
@@ -40,4 +39,22 @@ export const wrapTextNodesNative = (children: ReactNode, textStyle: TextStyle): 
     }
     return <Text style={textStyle}>{child}</Text>;
   });
+}
+
+export type UseStyledElementProps = {
+  styles: any[];
+  children: ReactNode;
+}
+
+export type StyledElementResult = {
+  viewStyle: ViewStyle;
+  styledChildren: ReactNode;
+}
+
+export const useStyledElementForNative = ({ styles, children }:UseStyledElementProps):StyledElementResult => {
+  const flattenedStyle = StyleSheet.flatten(styles);
+  const { textStyle, viewStyle } = useMemo(() => splitStyles(flattenedStyle), [flattenedStyle]);
+  const styledChildren = useMemo(() => wrapTextNodesNative(children, textStyle), [children, textStyle]);
+
+  return { viewStyle, styledChildren };
 }

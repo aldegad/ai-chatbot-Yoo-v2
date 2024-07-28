@@ -1,8 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-const Br = () => {
+export default function NativeBr() {
   return <Text>{'\n'}</Text>;
-};
-
-export default Br;
+}

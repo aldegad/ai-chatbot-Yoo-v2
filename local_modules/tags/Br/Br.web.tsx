@@ -1,7 +1,5 @@
 import React from 'react';
 
-const Br = () => {
+export function WebBr() {
   return <br />;
-};
-
-export default Br;
+}

@@ -3,7 +3,7 @@ import { ButtonProps } from '@local_modules/tags/Button/Button.type';
 import { wrapTextNodesWeb } from '@local_modules/tags/styleUtils.web';
 import { normalizeStyles } from '@local_modules/tags/normalize';
 
-const Button = ({ children, style, onClick }: ButtonProps) => {
+export default function WebButton({ children, style, onClick }:ButtonProps) {
   const wrappedChildren = useMemo(() => wrapTextNodesWeb(children), [children]);
   
   const onButtonClick = useCallback((e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -14,6 +14,4 @@ const Button = ({ children, style, onClick }: ButtonProps) => {
   }, [onClick]);
 
   return <button style={{...normalizeStyles.button, ...style}} onClick={onButtonClick}>{wrappedChildren}</button>;
-};
-
-export default Button;
+}

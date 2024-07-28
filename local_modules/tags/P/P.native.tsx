@@ -6,7 +6,7 @@ import { ElementProps } from '@local_modules/tags/type';
 
 export default function NativeH1({ children, style }: ElementProps) {
   const { viewStyle, styledChildren } = useStyledElementForNative({
-    styles: [normalizeStyles.h1, style],
+    styles: [normalizeStyles.p, style],
     children,
   })
   return <View style={viewStyle}>{styledChildren}</View>;

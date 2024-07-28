@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
-import { StyleSheet } from "react-native";
 
-export type H1Props = {
+export type ElementProps = {
   children: ReactNode;
   style?: React.CSSProperties;
 }

@@ -1,4 +1,8 @@
+"use client";
+
+import NextNative from '@local_modules/NextNative';
 import '../theme/globals.css';
+import AppTheme from '@theme/index';
 
 export default function RootLayout({
   children,
@@ -10,7 +14,11 @@ export default function RootLayout({
       <head>
         <title>Your AI. Yoo</title>
       </head>
-      <body>{children}</body>
+      <body>
+        <NextNative theme={AppTheme}>
+          {children}
+        </NextNative>
+      </body>
     </html>
   )
 }

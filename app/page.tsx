@@ -1,24 +1,24 @@
 "use client";
 
-import Link from '@local_modules/router/Link';
 import Div from '@local_modules/tags/Div';
 import { StyleSheet } from 'react-native';
 import Button from '@local_modules/tags/Button';
 import { color } from '@theme/index';
 import H1 from '@local_modules/tags/H1';
+import useRouter from '@local_modules/router/useRouter';
+import Span from '@local_modules/tags/Span';
 
 export default function App() {
+  const router = useRouter();
 
   const onClick = () => {
-
+    router.push('/chat');
   }
 
   return (
     <Div style={styles.container}>
-      <Div>
-        <H1 style={styles.title}>Your AI. Yoo</H1>
-        <Button onClick={() => onClick}>Login</Button>
-      </Div>
+      <H1 style={styles.title}>Your AI. <Span>Yoo</Span></H1>
+      <Button style={styles.loginButton} onClick={onClick}>Login</Button>
     </Div>
   );
 }
@@ -32,8 +32,15 @@ const styles = StyleSheet.create({
     backgroundColor: color.primary
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
+    fontWeight: 400,
     color: 'white',
     marginBottom: 16
+  },
+  loginButton: {
+    borderRadius: 50,
+    fontWeight: 600,
+    width: 180,
+    color: color.primary
   }
 })
