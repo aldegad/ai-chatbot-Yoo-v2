@@ -23,6 +23,7 @@ export const normalizeStyles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     borderRadius: 8,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    alignItems: 'center'
   }
 });

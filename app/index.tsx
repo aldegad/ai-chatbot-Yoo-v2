@@ -1,5 +1,2 @@
-import { Redirect } from 'expo-router';
-
-export default function Home() {
-  return <Redirect href="./page" />;
-}
+import page from './page';
+export default page;
