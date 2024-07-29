@@ -57,8 +57,6 @@ function createStyle<T extends { [key: string]: React.CSSProperties }>(styles: T
       }
     }
 
-    console.log(styleClassName, nativeMixedStyle);
-
     nativeMixedStyles[styleClassName] = nativeMixedStyle;
   }
 

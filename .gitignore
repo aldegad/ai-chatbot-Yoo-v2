@@ -45,4 +45,5 @@ yarn-error.log*
 .pnp.js
 # @end @expo/next-adapter
 
+app/api/configs*
 pages/api/configs*

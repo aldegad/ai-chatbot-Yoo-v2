@@ -1,11 +1,12 @@
-import { InputProps } from '@local_modules/tags/Input/Input.types';
+
+import { TextareaElementProps } from '@local_modules/tags/Textarea/Textarea.types';
 import { Platform } from 'react-native';
 
-const Input = Platform.select({
-  web: () => require('./Input.web').default as React.ComponentType<InputProps>,
-  default: () => require('./Input.native').default as React.ComponentType<InputProps>,
+const Textarea: React.FC<TextareaElementProps> = Platform.select({
+  web: () => require('./Textarea.web').default,
+  default: () => require('./Textarea.native').default,
 })();
 
-export default Input;
+export default Textarea;
 
-Input.displayName = 'Input';
+Textarea.displayName = 'Textarea';

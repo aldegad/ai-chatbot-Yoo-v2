@@ -1,4 +1,5 @@
 import { InputChangeEvent } from '@local_modules/tags/Input/Input.types';
+import { TextareaElementChangeEvent } from '@local_modules/tags/Textarea/Textarea.types';
 import { useState, useCallback } from 'react';
 
 interface FormFields {
@@ -7,7 +8,7 @@ interface FormFields {
 
 interface FormControl {
   value: any;
-  onChange: (e: InputChangeEvent) => void;
+  onChange: (e: InputChangeEvent|TextareaElementChangeEvent) => void;
 }
 
 export default function useFormModel<T extends FormFields>(initialState: T): [T, (name: keyof T) => FormControl] {

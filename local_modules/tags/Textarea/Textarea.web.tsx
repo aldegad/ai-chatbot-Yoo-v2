@@ -1,16 +1,19 @@
-import { InputProps } from '@local_modules/tags/Input/Input.types';
 import { normalizeStyles } from '@local_modules/tags/normalize';
+import { TextareaElementProps } from '@local_modules/tags/Textarea/Textarea.types';
 import React, { useCallback } from 'react';
+import { StyleSheet } from 'react-native';
 
-const Input = ({ 
+export default function WebTextarea({ 
   control, 
   style, 
   onChange, 
   onEnter,
   ...inputProps
-}: InputProps) => {
+}: TextareaElementProps) {
 
-  const onInputChange = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
+  const flattenedStyle = StyleSheet.flatten(style);
+
+  const onTextareaChange = useCallback((e:React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange?.({
       web: e,
       instance: {
@@ -19,7 +22,7 @@ const Input = ({
     });
   }, [onChange]);
 
-  const onInputEnter = useCallback((e:React.KeyboardEvent<HTMLInputElement>) => {
+  const onTextareaEnter = useCallback((e:React.KeyboardEvent<HTMLTextAreaElement>) => {
     if(e.key === 'Enter')
     onEnter?.({
       web: e,
@@ -29,11 +32,9 @@ const Input = ({
     });
   }, [onChange]);
   
-  return <input 
-    style={{ ...normalizeStyles.input, ...style }}
-    onChange={onInputChange}
-    onKeyUp={onInputEnter}
-    {...inputProps}></input>;
-};
-
-export default Input;
+  return <textarea 
+    style={{ ...normalizeStyles.input, ...flattenedStyle }}
+    onChange={onTextareaChange}
+    onKeyUp={onTextareaEnter}
+    {...inputProps}></textarea>;
+}

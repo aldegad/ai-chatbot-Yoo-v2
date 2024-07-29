@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import { exCharactor, initMessageFilter1, initMessageFilter2, rejectedMessageFilter1, rejectedMessageFilter2, systemConfig } from './configs'
+import { testCharacter, testPlayer, initMessageFilter1, initMessageFilter2, rejectedMessageFilter1, rejectedMessageFilter2, systemConfig } from './configs'
 
 const API_KEYS = [
   process.env.ANTHROPIC_API_KEY1, 
@@ -14,7 +14,7 @@ let currentTokenIndex = 1; // 현재 사용 중인 토큰의 인덱스
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { message } = req.body;
-    const system = `${systemConfig}\n\n플레이어 캐릭터: 김수홍\n\n너의 캐릭터: ${exCharactor}`;
+    const system = `${systemConfig}\n\n{{player}} 설정:\n${testPlayer}\n\n{{character}} 설정:\n${testCharacter}`;
 
     const responseMessage = await attemptApiCall({ system, message });
 

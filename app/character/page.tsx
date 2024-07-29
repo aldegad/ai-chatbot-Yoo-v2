@@ -4,13 +4,16 @@ import React, { useCallback, useState } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import Div from '@local_modules/tags/Div'
 import H1 from '@local_modules/tags/H1'
-import { color } from 'theme'
+import { borderRadius, color } from 'theme'
 import Button from '@local_modules/tags/Button'
 import Input from '@local_modules/tags/Input'
 import Label from '@local_modules/tags/Label'
 import axios from 'axios';
 import useFormModel from '@local_modules/useFormModel';
 import createStyle from '@local_modules/createStyle';
+import clientEnv from '@clientEnv';
+import Textarea from '@local_modules/tags/Textarea';
+import Span from '@local_modules/tags/Span';
 
 export default function Page() {
 
@@ -20,21 +23,27 @@ export default function Page() {
   });
 
   const onClick = useCallback(async() => {
-    /* const response = await axios.post(`${env.LOCAL_ADDRESS}/api/chat`, {
+    const response = await axios.post(`${clientEnv.LOCAL_ADDRESS}/api/chat`, {
       message: fields.characterSetting
-    }); */
+    });
   }, [fields]);
 
   return (
     <Div style={styles.layout}>
       <Div style={styles.container}>
         <Div style={styles.inputGroup}>
-          <Label>캐릭터 이름</Label>
+          <Div style={styles.inputLabelRow}>
+            <Label>캐릭터 이름</Label>
+            <Div style={styles.textLength}><Span style={styles.textCount}>{fields.characterName.length}</Span>/15</Div>
+          </Div>
           <Input style={styles.input} {...modelValue('characterName')}/>
         </Div>
         <Div style={styles.inputGroup}>
-          <Label>캐릭터 설정</Label>
-          <Input style={styles.input} {...modelValue('characterSetting')}/>
+          <Div style={styles.inputLabelRow}>
+            <Label>캐릭터 설정</Label>
+            <Div style={styles.textLength}><Span style={styles.textCount}>{fields.characterSetting.length}</Span>/100</Div>
+          </Div>
+          <Textarea style={[styles.input, styles.textarea]} {...modelValue('characterSetting')}/>
         </Div>
         <Button style={styles.submitButton} onClick={onClick}>다음</Button>
       </Div>
@@ -52,21 +61,40 @@ const styles = createStyle({
   },
   container: {
     rowGap: 8,
-    maxWidth: 200,
-    width: '100%'
+    maxWidth: 280,
+    width: '100%',
+    backgroundColor: 'white',
+    padding: `24 12 14`,
+    borderRadius: borderRadius.base
   },
   inputGroup: {
     rowGap: 4
+  },
+  inputLabelRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  textLength: {
+    flexDirection: 'row',
+    fontSize: 14
+  },
+  textCount: {
+    color: color.primary
   },
   label: {
     color: color.text
   },
   input: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: 'rgba(0,0,0,0.08)',
     color: color.text
   },
+  textarea: {
+    minHeight: 180,
+    resize: 'none'
+  },
   submitButton: {
-    backgroundColor: 'white',
-    color: color.primary
+    backgroundColor: color.primary,
+    borderRadius: 50,
+    color: 'white'
   }
 });

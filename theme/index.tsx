@@ -6,6 +6,9 @@ export const color = {
 }
 
 export const font = Platform.OS === 'web' ? require('./theme.web').default : require('./theme.native').default;
+export const borderRadius = {
+  base: 16
+}
 
 const AppTheme = { color, font };
 export type AppThemeProps = typeof AppTheme;
