@@ -8,14 +8,16 @@ import Button from '@local_modules/tags/Button'
 import useFormModel from '@local_modules/useFormModel'
 import axios, { AxiosResponse } from 'axios'
 import clientEnv from '@clientEnv'
-import { SignUpParams, SignUpResponse } from '@app/type.api'
 import InputComponent from '@components/inputComponent'
 import { isValidEmail, isValidPassword } from '@components/validation'
 import useRouter from '@local_modules/router/useRouter'
 import H1 from '@local_modules/tags/H1'
+import useLoading from '@components/useLoading'
+import { apiClient } from '@apiClient'
 
 export default function Page() {
   const router = useRouter();
+  const { createLoading } = useLoading();
 
   const [fields, modelValue] = useFormModel({
     email: '',
@@ -25,23 +27,27 @@ export default function Page() {
   const onSubmit = useCallback(async() => {
     if(!isValidEmail(fields.email)) return alert('유효한 이메일이 아닙니다');
     if(!isValidPassword(fields.password)) return alert('비밀번호는 영문+숫자 8자이상 입력해주세요.');
+
+    const loading = await createLoading();
+    loading.present();
     
     try {
-      const response = await axios.post<SignUpResponse, AxiosResponse<SignUpResponse>, SignUpParams>(`${clientEnv.LOCAL_ADDRESS}/api/public/signUp`, {
+      const response = await apiClient.public.signUp({
         email: fields.email,
         password: fields.password
       })
 
       alert(response.data.message);
       router.replace('/login');
-    } catch(e:any) {
-      if(axios.isAxiosError(e) && e.response) {
-        alert(e.response.data.error);
+    } catch(error:any) {
+      if (error instanceof Error) {
+        alert(error.message);
       } else {
         alert('알 수 없는 오류가 발생했습니다.');
       }
-      console.error(`API Error: `, e);
     }
+
+    loading.dismiss();
   }, [fields])
 
   return (

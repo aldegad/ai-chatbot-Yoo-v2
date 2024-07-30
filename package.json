@@ -20,7 +20,8 @@
     "react-native-safe-area-context": "4.10.5",
     "react-native-screens": "3.31.1",
     "react-native-svg": "^15.4.0",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "react-native-webview": "13.8.6"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
@@ -47,9 +48,10 @@
     "dependencies:nextjs": "npm install ignore-loader @svgr/webpack",
     "svg:expo": "npm install react-native-svg && npm install --save-dev react-native-svg-transformer",
     "svg:nextjs": "npm install @svgr/webpack",
+    "etc":"npx expo install react-native-webview",
     "api": "npm install axios cors",
     "mongodb-jwt": "npm install mongodb mongoose bcryptjs jsonwebtoken && npm install --save-dev @types/bcryptjs @types/jsonwebtoken",
-    "dependencies:full": "npm run dependencies:expo && npm run dependencies:nextjs && npm run svg:expo && npm run svg:nextjs && npm run api && npm run mongodb"
+    "dependencies:full": "npm run dependencies:expo && npm run dependencies:nextjs && npm run svg:expo && npm run svg:nextjs && npm run api && npm run mongodb && npm i etc"
   },
   "name": "ai-chatbot-yoo-v2",
   "main": "expo-router/entry",

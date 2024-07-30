@@ -1,8 +1,9 @@
 import { Platform } from "react-native"
 
 export const color = {
-  primary: '#8A6BF4',
-  text: '#313131'
+  primary: 'rgb(138, 107, 244)',
+  text: '#313131',
+  backdrop: 'rgba(138, 107, 244, 0.5)'
 }
 
 export const font = Platform.OS === 'web' ? require('./theme.web').default : require('./theme.native').default;

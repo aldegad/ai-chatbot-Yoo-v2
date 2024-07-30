@@ -37,6 +37,12 @@
       "@api/*": [
         "app/api/*"
       ],
+      "@apiClient": [
+        "app/api.client.tsx"
+      ],
+      "@api/type": [
+        "app/api.type.tsx"
+      ],
       "@lib/*": [
         "lib/*"
       ],
