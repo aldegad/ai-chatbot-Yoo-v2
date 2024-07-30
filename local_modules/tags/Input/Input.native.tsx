@@ -1,6 +1,7 @@
-import { InputProps } from '@local_modules/tags/Input/Input.types';
+
 import { normalizeStyles } from '@local_modules/tags/normalize';
-import { useCallback } from 'react';
+import { InputElementProps } from '@local_modules/tags/type';
+import { useCallback, useEffect, useState } from 'react';
 import { NativeSyntheticEvent, TextInput, TextInputChangeEventData } from 'react-native';
 
 const Input = ({ 
@@ -8,8 +9,9 @@ const Input = ({
   style, 
   onChange, 
   onEnter,
-  ...inputProps
-}: InputProps) => {
+  type,
+  ...rest
+}: InputElementProps) => {
   const onInputChange = useCallback((e:NativeSyntheticEvent<TextInputChangeEventData>) => {
     onChange?.({
       native: e,
@@ -19,11 +21,22 @@ const Input = ({
     });
   }, [onChange]);
 
+  const [secureTextEntry, setSecureTextEntry] = useState(false);
+
+  useEffect(() => {
+    if(type == 'password') {
+      setSecureTextEntry(true);
+    } else {
+      setSecureTextEntry(false);
+    }
+  }, [type])
+  
   return <TextInput 
     style={[normalizeStyles.input, style]}
+    secureTextEntry={secureTextEntry}
     onChange={onInputChange}
     onSubmitEditing={e => onEnter()}
-    {...inputProps}></TextInput>;
+    {...rest}></TextInput>;
 };
 
 export default Input;

@@ -1,5 +1,6 @@
 import Input from '@local_modules/tags/Input';
 import { normalizeStyles } from '@local_modules/tags/normalize';
+import Textarea from '@local_modules/tags/Textarea';
 import { ButtonElementProps, ElementProps } from '@local_modules/tags/type';
 import React, { ReactNode, useCallback, useMemo } from 'react';
 import { GestureResponderEvent, StyleSheet, Text, TextStyle, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
@@ -29,15 +30,17 @@ const wrapTextNodes = (children: ReactNode, textStyle: TextStyle): any => {
     
     if (React.isValidElement(child)) {
       // TextInput이면 텍스트 스타일을 적용하지 않음
-      if (child.type === Input) {
+      // console.log(child.type, child.props.style);
+      if (child.type === Input || child.type === Textarea) {
         return child;
       }
+
       const { fontWeight, ...otherStyles } = textStyle;
       const fontFamily = fontWeight || undefined;
 
       const newStyle = [{ fontFamily }, otherStyles, child.props.style];
-      const newChildren = wrapTextNodes(child.props.children, textStyle);
-      return React.cloneElement<any>(child, { style: newStyle }, newChildren);
+      // const newChildren = wrapTextNodes(child.props.children, textStyle);
+      return React.cloneElement<any>(child, { style: newStyle });
     }
     return <Text style={textStyle}>{child}</Text>;
   });

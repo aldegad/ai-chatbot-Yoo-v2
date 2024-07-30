@@ -1,5 +1,5 @@
 import { normalizeStyles } from '@local_modules/tags/normalize';
-import { TextareaElementProps } from '@local_modules/tags/Textarea/Textarea.types';
+import { InputElementProps } from '@local_modules/tags/type';
 import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 
@@ -9,7 +9,7 @@ export default function WebTextarea({
   onChange, 
   onEnter,
   ...inputProps
-}: TextareaElementProps) {
+}: InputElementProps) {
 
   const flattenedStyle = StyleSheet.flatten(style);
 

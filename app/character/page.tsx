@@ -61,7 +61,7 @@ const styles = createStyle({
   },
   container: {
     rowGap: 8,
-    maxWidth: 280,
+    maxWidth: 380,
     width: '100%',
     backgroundColor: 'white',
     padding: `24 12 14`,

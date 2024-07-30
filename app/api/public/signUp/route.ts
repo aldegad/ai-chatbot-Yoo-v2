@@ -1,14 +1,15 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@lib/mongodb';
-import User from '@models/User';
+import User, { IUser } from '@models/User';
+import { SignUpParams } from '@app/type.api';
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     await dbConnect();
-    const { email, password } = await req.json();
+    const { email, password }: SignUpParams = await req.json();
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne<IUser>({ email });
     if (existingUser) {
       return NextResponse.json({ error: 'Username already exists' }, { status: 400 });
     }

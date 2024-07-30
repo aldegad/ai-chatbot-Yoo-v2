@@ -1,7 +1,6 @@
 "use client";
 
 import Div from '@local_modules/tags/Div'
-import { StyleSheet } from 'react-native'
 import Button from '@local_modules/tags/Button'
 import { color } from '@theme/index'
 import H1 from '@local_modules/tags/H1'
@@ -12,14 +11,20 @@ import createStyle from '@local_modules/createStyle';
 export default function App() {
   const router = useRouter();
 
-  const onClick = () => {
-    router.push('/character');
+  const onNavToLogin = () => {
+    router.push('/login');
+  }
+  const onNavToSignUp = () => {
+    router.push('/signUp');
   }
   // header setting은 나중에 하자.
   return (
     <Div style={styles.container}>
       <H1 style={styles.title}>Your AI. <Span>Yoo</Span></H1>
-      <Button style={styles.loginButton} onClick={onClick}>Login</Button>
+      <Div style={styles.buttonGroup}>
+        <Button style={styles.button} onClick={onNavToLogin}>Login</Button>
+        <Button style={styles.button} onClick={onNavToSignUp}>Sign Up</Button>
+      </Div>
     </Div>
   )
 }
@@ -38,7 +43,10 @@ const styles = createStyle({
     color: 'white',
     marginBottom: 16
   },
-  loginButton: {
+  buttonGroup: {
+    gap: 12
+  },
+  button: {
     borderRadius: 50,
     fontWeight: 600,
     width: 180,

@@ -34,11 +34,17 @@
       "@theme/*": [
         "theme/*"
       ],
+      "@api/*": [
+        "app/api/*"
+      ],
       "@lib/*": [
         "lib/*"
       ],
       "@models/*": [
         "models/*"
+      ],
+      "@app/*": [
+        "app/*"
       ]
     },
     "incremental": true,

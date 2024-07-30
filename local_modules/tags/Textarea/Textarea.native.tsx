@@ -1,7 +1,7 @@
-import { InputProps } from '@local_modules/tags/Input/Input.types';
 import { normalizeStyles } from '@local_modules/tags/normalize';
+import { InputElementProps } from '@local_modules/tags/type';
 import { useCallback } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 
 export default function NativeTextarea({ 
   control, 
@@ -9,7 +9,7 @@ export default function NativeTextarea({
   onChange, 
   onEnter,
   ...inputProps
-}: InputProps) {
+}: InputElementProps) {
   const onInputChange = useCallback((e:any) => {
     onChange?.({
       native: e,

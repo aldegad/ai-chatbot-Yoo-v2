@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import axios from 'axios'
-import { testCharacter, testPlayer, initMessageFilter1, initMessageFilter2, rejectedMessageFilter1, rejectedMessageFilter2, systemConfig } from '../configs'
+import { testCharacter, testPlayer, initMessageFilter1, initMessageFilter2, rejectedMessageFilter1, rejectedMessageFilter2, systemConfig } from '@api/configs'
 
 const API_KEYS = [
   process.env.ANTHROPIC_API_KEY1, 

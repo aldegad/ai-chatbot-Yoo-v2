@@ -5,7 +5,7 @@ export const normalizeStyles = StyleSheet.create({
     borderColor: '#dfdfdf',
     backgroundColor: '#f2f2f2',
     borderWidth: 1,
-    height: 38,
+    minHeight: 38,
     width: '100%',
     minWidth: 200,
     textAlign: 'left',

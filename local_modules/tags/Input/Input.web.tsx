@@ -1,5 +1,6 @@
-import { InputProps } from '@local_modules/tags/Input/Input.types';
+
 import { normalizeStyles } from '@local_modules/tags/normalize';
+import { InputElementProps } from '@local_modules/tags/type';
 import React, { useCallback } from 'react';
 
 const Input = ({ 
@@ -8,7 +9,7 @@ const Input = ({
   onChange, 
   onEnter,
   ...inputProps
-}: InputProps) => {
+}: InputElementProps) => {
 
   const onInputChange = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
     onChange?.({
