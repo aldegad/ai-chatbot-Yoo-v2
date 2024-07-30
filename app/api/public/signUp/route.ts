@@ -11,14 +11,15 @@ export async function POST(req: NextRequest) {
 
     const existingUser = await User.findOne<IUser>({ email });
     if (existingUser) {
-      return NextResponse.json({ error: 'Username already exists' }, { status: 400 });
+      return NextResponse.json({ error: '이미 회원인 이메일 입니다. 로그인을 해주세요.' }, { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ email, password: hashedPassword });
+    await User.create({ email, password: hashedPassword });
 
-    return NextResponse.json({ message: 'User created successfully' }, { status: 201 });
+    return NextResponse.json({ message: '회원 가입 되었습니다.' }, { status: 201 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ error: 'Error creating user' }, { status: 500 });
   }
 }

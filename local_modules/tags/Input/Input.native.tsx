@@ -2,7 +2,7 @@
 import { normalizeStyles } from '@local_modules/tags/normalize';
 import { InputElementProps } from '@local_modules/tags/type';
 import { useCallback, useEffect, useState } from 'react';
-import { NativeSyntheticEvent, TextInput, TextInputChangeEventData } from 'react-native';
+import { KeyboardTypeOptions, NativeSyntheticEvent, TextInput, TextInputChangeEventData } from 'react-native';
 
 const Input = ({ 
   control, 
@@ -21,6 +21,7 @@ const Input = ({
     });
   }, [onChange]);
 
+  const [keyboardType, setKeyboardType] = useState<KeyboardTypeOptions>("default");
   const [secureTextEntry, setSecureTextEntry] = useState(false);
 
   useEffect(() => {
@@ -29,11 +30,18 @@ const Input = ({
     } else {
       setSecureTextEntry(false);
     }
+
+    if(type === 'email') {
+      setKeyboardType('email-address');
+    } else {
+      setKeyboardType('default');
+    }
   }, [type])
   
   return <TextInput 
     style={[normalizeStyles.input, style]}
     secureTextEntry={secureTextEntry}
+    keyboardType={keyboardType}
     onChange={onInputChange}
     onSubmitEditing={e => onEnter()}
     {...rest}></TextInput>;

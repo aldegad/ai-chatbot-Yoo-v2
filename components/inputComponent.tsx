@@ -9,10 +9,11 @@ import { color } from "@theme/index";
 export type InputComponentProps = {
   label?: string,
   type?: InputType,
-  value: string,
+  value?: string,
   placeholder?: string,
   maxLength?: number,
-  onChange: (e:InputElementChangeEvent) => void
+  onEnter?: (e:any) => void
+  onChange?: (e:InputElementChangeEvent) => void
 }
 export default function InputComponent({ label, value, maxLength:_maxLength, ...restInputProps }:InputComponentProps) {
   const maxLength = _maxLength || 20; 
@@ -21,9 +22,9 @@ export default function InputComponent({ label, value, maxLength:_maxLength, ...
     <Div style={styles.inputComponent}>
       <Div style={styles.inputLabelRow}>
         { label ? <Label style={styles.label}>{label}</Label> : null }
-        <Div style={styles.textLength}><Span style={styles.textCount}>{value.length}</Span>/{maxLength}</Div>
+        <Div style={styles.textLength}><Span style={styles.textCount}>{value?.length||'0'}</Span>/{maxLength}</Div>
       </Div>
-      <Input {...restInputProps} 
+      <Input {...restInputProps}
         maxLength={maxLength}
         style={styles.input}></Input>
     </Div>

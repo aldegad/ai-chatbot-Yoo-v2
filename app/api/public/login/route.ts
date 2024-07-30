@@ -13,20 +13,23 @@ export async function POST(req: Request) {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 400 });
+      return NextResponse.json({ error: '가입된 정보가 없습니다.' }, { status: 400 });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return NextResponse.json({ error: 'Invalid password' }, { status: 400 });
+      return NextResponse.json({ error: '가입된 정보가 없습니다.' }, { status: 400 });
     }
 
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
     const refreshToken = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '7d' });
 
-    const response = NextResponse.json({ message: 'Login successful', token, refreshToken });
-    response.cookies.set('token', token, { httpOnly: true, maxAge: 3600 });
-    response.cookies.set('refreshToken', refreshToken, { httpOnly: true, maxAge: 604800 });
+    const response = NextResponse.json({ message: '로그인 되었습니다.', token, refreshToken });
+    /** 
+     * 앱까지 같이 할 프로젝트라 이것을 사용할 수 없음
+     * response.cookies.set('token', token, { httpOnly: true, maxAge: 3600 });
+     * response.cookies.set('refreshToken', refreshToken, { httpOnly: true, maxAge: 604800 }); 
+    */
 
     return response;
   } catch (error) {
