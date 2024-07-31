@@ -3,6 +3,7 @@ import Div from "@local_modules/tags/Div";
 import Input from "@local_modules/tags/Input";
 import Label from "@local_modules/tags/Label";
 import Span from "@local_modules/tags/Span";
+import Textarea from "@local_modules/tags/Textarea";
 import { InputElementChangeEvent, InputType } from "@local_modules/tags/type";
 import { color } from "@theme/index";
 
@@ -15,7 +16,7 @@ export type InputComponentProps = {
   onEnter?: (e:any) => void
   onChange?: (e:InputElementChangeEvent) => void
 }
-export default function InputComponent({ label, value, maxLength:_maxLength, ...restInputProps }:InputComponentProps) {
+export default function TextareaComponent({ label, value, maxLength:_maxLength, ...restInputProps }:InputComponentProps) {
   const maxLength = _maxLength || 20; 
 
   return (
@@ -24,7 +25,8 @@ export default function InputComponent({ label, value, maxLength:_maxLength, ...
         { label ? <Label style={styles.label}>{label}</Label> : null }
         <Div style={styles.textLength}><Span style={styles.textCount}>{value?.length||'0'}</Span>/{maxLength}</Div>
       </Div>
-      <Input {...restInputProps}
+      <Textarea
+        {...restInputProps}
         maxLength={maxLength}
         style={styles.input}/>
     </Div>

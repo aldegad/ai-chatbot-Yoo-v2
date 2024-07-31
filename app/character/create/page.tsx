@@ -1,23 +1,21 @@
 "use client";
 
-import React, { useCallback, useState } from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import React, { useCallback } from 'react'
 import Div from '@local_modules/tags/Div'
-import H1 from '@local_modules/tags/H1'
 import { borderRadius, color } from 'theme'
 import Button from '@local_modules/tags/Button'
-import Input from '@local_modules/tags/Input'
-import Label from '@local_modules/tags/Label'
 import axios from 'axios';
 import useFormModel from '@local_modules/useFormModel';
 import createStyle from '@local_modules/createStyle';
 import clientEnv from '@clientEnv';
-import Textarea from '@local_modules/tags/Textarea';
-import Span from '@local_modules/tags/Span';
 import useLoading from '@components/useLoading';
+import InputComponent from '@components/inputComponent';
+import TextareaComponent from '@components/textareaComponent';
+import useCookies from '@local_modules/useCookies';
 
 export default function Page() {
   const { createLoading } = useLoading();
+  const { getCookie } = useCookies();
 
   const [fields, modelValue] = useFormModel({
     name: '',
@@ -28,13 +26,8 @@ export default function Page() {
     const loading = await createLoading();
     loading.present();
 
-    const getCookie = (name:string) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop()?.split(';').shift();
-    }
-
     const token = getCookie('token');
+    
     const response = await axios.post(`${clientEnv.LOCAL_ADDRESS}/api/protected/character`, {
       name: fields.name,
       system: fields.system
@@ -50,20 +43,9 @@ export default function Page() {
   return (
     <Div style={styles.layout}>
       <Div style={styles.container}>
-        <Div style={styles.inputGroup}>
-          <Div style={styles.inputLabelRow}>
-            <Label>캐릭터 이름</Label>
-            <Div style={styles.textLength}><Span style={styles.textCount}>{fields.name.length}</Span>/15</Div>
-          </Div>
-          <Input style={styles.input} {...modelValue('name')}/>
-        </Div>
-        <Div style={styles.inputGroup}>
-          <Div style={styles.inputLabelRow}>
-            <Label>캐릭터 설정</Label>
-            <Div style={styles.textLength}><Span style={styles.textCount}>{fields.system.length}</Span>/100</Div>
-          </Div>
-          <Textarea style={[styles.input, styles.textarea]} {...modelValue('system')}/>
-        </Div>
+        <InputComponent label="캐릭터 이름" {...modelValue('name')}/>
+        <TextareaComponent label="캐릭터 설정" {...modelValue('system')}/>
+
         <Button style={styles.submitButton} onClick={onClick}>다음</Button>
       </Div>
     </Div>

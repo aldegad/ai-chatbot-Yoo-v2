@@ -1,8 +1,6 @@
 import createStyle from "@local_modules/createStyle";
-import { useModal } from "@local_modules/modalProvider";
-import Button from "@local_modules/tags/Button";
+import { useModal } from "@local_modules/useModal";
 import Div from "@local_modules/tags/Div";
-import H1 from "@local_modules/tags/H1";
 import { color } from "@theme/index";
 import { Platform, StyleSheet } from "react-native";
 import WebView from "react-native-webview";

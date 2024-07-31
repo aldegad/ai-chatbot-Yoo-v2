@@ -21,7 +21,8 @@
     "react-native-screens": "3.31.1",
     "react-native-svg": "^15.4.0",
     "react-native-web": "~0.19.6",
-    "react-native-webview": "13.8.6"
+    "react-native-webview": "13.8.6",
+    "@react-native-async-storage/async-storage": "1.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
@@ -46,10 +47,10 @@
     "build": "next build",
     "dependencies:expo": "npx expo install expo-splash-screen && npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar",
     "dependencies:nextjs": "npm install ignore-loader @svgr/webpack",
-    "svg:expo": "npm install react-native-svg && npm install --save-dev react-native-svg-transformer",
+    "svg:expo": "npx expo install react-native-svg && npx expo install --save-dev react-native-svg-transformer",
     "svg:nextjs": "npm install @svgr/webpack",
-    "etc":"npx expo install react-native-webview",
-    "api": "npm install axios cors",
+    "api": "npm install axios cors && npx expo install @react-native-async-storage/async-storage",
+    "webView": "npx expo install react-native-webview",
     "mongodb-jwt": "npm install mongodb mongoose bcryptjs jsonwebtoken && npm install --save-dev @types/bcryptjs @types/jsonwebtoken",
     "dependencies:full": "npm run dependencies:expo && npm run dependencies:nextjs && npm run svg:expo && npm run svg:nextjs && npm run api && npm run mongodb && npm i etc"
   },
