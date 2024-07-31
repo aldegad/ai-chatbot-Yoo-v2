@@ -35,6 +35,8 @@ export default function Page() {
         password: fields.password
       });
       alert(data.message);
+      document.cookie = `token=${data.token}; path=/; max-age=${60*60*24*7}`
+      document.cookie = `refreshToken=${data.refreshToken}; path=/; max-age=${60*60*24*7}`
       router.replace('/character');
     } catch (error) {
       if (error instanceof Error) {

@@ -14,18 +14,37 @@ import createStyle from '@local_modules/createStyle';
 import clientEnv from '@clientEnv';
 import Textarea from '@local_modules/tags/Textarea';
 import Span from '@local_modules/tags/Span';
+import useLoading from '@components/useLoading';
 
 export default function Page() {
+  const { createLoading } = useLoading();
 
   const [fields, modelValue] = useFormModel({
-    characterName: '',
-    characterSetting: ''
+    name: '',
+    system: ''
   });
 
   const onClick = useCallback(async() => {
-    const response = await axios.post(`${clientEnv.LOCAL_ADDRESS}/api/chat`, {
-      message: fields.characterSetting
+    const loading = await createLoading();
+    loading.present();
+
+    const getCookie = (name:string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift();
+    }
+
+    const token = getCookie('token');
+    const response = await axios.post(`${clientEnv.LOCAL_ADDRESS}/api/protected/character`, {
+      name: fields.name,
+      system: fields.system
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     });
+
+    loading.dismiss();
   }, [fields]);
 
   return (
@@ -34,16 +53,16 @@ export default function Page() {
         <Div style={styles.inputGroup}>
           <Div style={styles.inputLabelRow}>
             <Label>캐릭터 이름</Label>
-            <Div style={styles.textLength}><Span style={styles.textCount}>{fields.characterName.length}</Span>/15</Div>
+            <Div style={styles.textLength}><Span style={styles.textCount}>{fields.name.length}</Span>/15</Div>
           </Div>
-          <Input style={styles.input} {...modelValue('characterName')}/>
+          <Input style={styles.input} {...modelValue('name')}/>
         </Div>
         <Div style={styles.inputGroup}>
           <Div style={styles.inputLabelRow}>
             <Label>캐릭터 설정</Label>
-            <Div style={styles.textLength}><Span style={styles.textCount}>{fields.characterSetting.length}</Span>/100</Div>
+            <Div style={styles.textLength}><Span style={styles.textCount}>{fields.system.length}</Span>/100</Div>
           </Div>
-          <Textarea style={[styles.input, styles.textarea]} {...modelValue('characterSetting')}/>
+          <Textarea style={[styles.input, styles.textarea]} {...modelValue('system')}/>
         </Div>
         <Button style={styles.submitButton} onClick={onClick}>다음</Button>
       </Div>

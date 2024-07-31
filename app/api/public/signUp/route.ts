@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: '회원 가입 되었습니다.' }, { status: 201 });
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ error: 'Error creating user' }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ error: 'Error signUp' }, { status: 500 });
   }
 }

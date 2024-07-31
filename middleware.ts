@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
   }
 
   // 보호된 경로에 대한 토큰 검증
-  if (request.nextUrl.pathname.startsWith('/api/protected')) {
+  /* if (request.nextUrl.pathname.startsWith('/api/protected')) {
     const token = request.cookies.get('token')?.value || request.headers.get('Authorization')?.split(' ')[1];
 
     if (!token) {
@@ -37,7 +37,7 @@ export function middleware(request: NextRequest) {
         { status: 401, headers: response.headers }
       );
     }
-  }
+  } */
 
   return response;
 }

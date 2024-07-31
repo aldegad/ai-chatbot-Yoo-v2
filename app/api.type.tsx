@@ -6,8 +6,9 @@
   - **401 Unauthorized**: 인증이 필요하거나 인증에 실패했음을 나타냅니다.
   - **403 Forbidden**: 서버가 요청을 이해했지만, 권한이 없어서 요청을 거부했음을 나타냅니다.
   - **404 Not Found**: 서버가 요청받은 리소스를 찾을 수 없음을 나타냅니다.
+  - **405 Method Not Allowed**: 서버가 요청한 메소드를 인식했지만, 대상 리소스에 대해 허용되지 않음을 나타냅니다.
   - **409 Conflict**: 요청이 서버의 현재 상태와 충돌함을 나타냅니다.
-  - **422 Unprocessable Entity**: 요청의 문법은 올바르지만, 의미론적 오류로 인해 요청을 처리할 수 없음을 
+  - **422 Unprocessable Entity**: 요청의 문법은 올바르지만, 의미론적 오류로 인해 요청을 처리할 수 없음을 나태냅니다.
  */
 
 export type ApiResponse = {
@@ -25,4 +26,7 @@ export type LoginParams = {
   email: string,
   password: string
 }
-export type LoginResponse = ApiResponse;
+export type LoginResponse = ApiResponse & {
+  token: string,
+  refreshToken: string
+}
