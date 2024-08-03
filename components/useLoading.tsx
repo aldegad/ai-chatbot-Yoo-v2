@@ -1,4 +1,4 @@
-import createStyle from "@local_modules/createStyle";
+import createStyle from "@local_modules/theme/createStyle";
 import { useModal } from "@local_modules/useModal";
 import Div from "@local_modules/tags/Div";
 import { color } from "@theme/index";

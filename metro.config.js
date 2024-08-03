@@ -1,5 +1,4 @@
 const { getDefaultConfig } = require("expo/metro-config");
-const { exclusionList } = require("metro-config");
 
 module.exports = (() => {
 

@@ -1,10 +1,9 @@
 "use client"
 
 import React, { useCallback } from 'react'
-import { StyleSheet } from 'react-native'
 import Div from '@local_modules/tags/Div'
 import H1 from '@local_modules/tags/H1'
-import { borderRadius, color } from 'theme'
+import { borderRadius, boxShadow, color } from 'theme'
 import Button from '@local_modules/tags/Button'
 import useFormModel from '@local_modules/useFormModel'
 import InputComponent from '@components/inputComponent'
@@ -12,9 +11,8 @@ import { isValidEmail, isValidPassword } from '@components/validation'
 import useRouter from '@local_modules/router/useRouter'
 import useLoading from '@components/useLoading'
 import { apiClient } from '@apiClient'
-import useCookies from '@local_modules/cookieManager'
-import cookieManager from '@local_modules/cookieManager'
 import { useErrorCatch } from '@components/useErrorCatch'
+import createStyle from '@local_modules/theme/createStyle'
 
 export default function Page() {
   const router = useRouter();
@@ -37,7 +35,7 @@ export default function Page() {
       const { data } = await apiClient.user.login({
         email: fields.email,
         password: fields.password
-      });
+      })
       alert(data.message);
 
       router.replace('/character');
@@ -60,7 +58,7 @@ export default function Page() {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = createStyle({
   layout: {
     flex: 1,
     justifyContent: 'center',
@@ -76,7 +74,8 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     padding: 24,
-    borderRadius: borderRadius.base
+    borderRadius: borderRadius.base,
+    boxShadow: boxShadow.base
   },
   button: {
     backgroundColor: color.primary,

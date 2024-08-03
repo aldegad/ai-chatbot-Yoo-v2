@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET!;
 export async function authenticateUser(req: NextRequest) {
   const authHeader = req.headers.get('Authorization');
   const token = authHeader && authHeader.startsWith('Bearer ') 
-    ? authHeader.slice(7) 
+    ? authHeader.slice(7)
     : null;
 
   if (!token) {

@@ -1,5 +1,5 @@
 import { IconEye, IconEyeOff } from "@components/images";
-import createStyle from "@local_modules/createStyle";
+import createStyle from "@local_modules/theme/createStyle";
 import Button from "@local_modules/tags/Button";
 import Div from "@local_modules/tags/Div";
 import Input from "@local_modules/tags/Input";
@@ -53,8 +53,8 @@ export default function InputComponent({ label, ...inputProps }:InputComponentPr
           <Button style={styles.togglePasswordVisibleButton} onClick={onTogglePasswordVisible}>
             {
               passwordVisible ?
-              <IconEyeOff width={20} height={20}/> : 
-              <IconEye width={20} height={20}/>
+              <IconEyeOff color={color.primary} width={20} height={20}/> : 
+              <IconEye color={color.primary} width={20} height={20}/>
             }
           </Button> : null
         }
@@ -86,7 +86,8 @@ const styles = createStyle({
   },
   input: {
     backgroundColor: 'rgba(0,0,0,0.08)',
-    color: color.text
+    color: color.text,
+    cursorColor: color.primary
   },
   inputWithIconRight: {
     paddingRight: 40

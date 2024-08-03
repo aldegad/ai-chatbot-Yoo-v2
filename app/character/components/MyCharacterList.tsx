@@ -2,14 +2,18 @@
 
 import { apiClient } from "@apiClient";
 import { useErrorCatch } from "@components/useErrorCatch";
-import createStyle from "@local_modules/createStyle";
+import createStyle from "@local_modules/theme/createStyle";
 import { formatDate } from "@local_modules/formatDate";
 import Div from "@local_modules/tags/Div";
-import { borderRadius } from "@theme/index";
+import { borderRadius, color } from "@theme/index";
 import { ICharacter } from "@type";
 import { useEffect, useState } from "react";
+import Button from "@local_modules/tags/Button";
+import useRouter from "@local_modules/router/useRouter";
+import { Schema } from "mongoose";
 
 export default function MyCharacterList() {
+  const router = useRouter();
   const { createErrorCatch } = useErrorCatch();
 
   const [myCharacterList, setMyCharacterList] = useState<ICharacter.MineResponse>({ list: [], totalCount: 0 });
@@ -25,15 +29,19 @@ export default function MyCharacterList() {
     })()
   }, [])
 
+  const onNavToChat = (_id:Schema.Types.ObjectId) => {
+    router.push(`/chat/${_id}`);
+  }
+
   return (
     <Div style={styles.list}>
       {
         myCharacterList.list.map(character => (
-          <Div key={character._id} style={styles.item}>
-            <Div>{character.name}</Div>
+          <Button key={character._id} style={styles.item} onClick={() => onNavToChat(character._id)}>
+            <Div style={styles.name}>{character.name}</Div>
             <Div>{character.system}</Div>
-            <Div>{formatDate(character.createdAt)}</Div>
-          </Div>
+            <Div style={styles.createAt}>{formatDate(character.createdAt)}</Div>
+          </Button>
         ))
       }
     </Div>
@@ -47,6 +55,18 @@ const styles = createStyle({
   item: {
     backgroundColor: 'white',
     borderRadius: borderRadius.base,
-    padding: '12 14'
+    padding: '12 14',
+    rowGap: 6,
+    textAlign: 'left',
+    alignItems: 'flex-start'
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: 600,
+    color: color.primary
+  },
+  createAt: {
+    fontSize: 12,
+    color: color.gray
   }
 })

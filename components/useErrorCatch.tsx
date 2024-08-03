@@ -3,7 +3,7 @@ import axios from "axios";
 import { useCallback } from "react";
 
 export const useErrorCatch = () => {
-  const router = useRouter();
+  const router = useRouter()
   const createErrorCatch = useCallback(async(error: unknown) => {
     if (axios.isAxiosError(error)) {
       alert(error.response?.data?.error || '네트워크 오류가 발생했습니다.');
@@ -15,5 +15,5 @@ export const useErrorCatch = () => {
     }
   }, [router]);
 
-  return { createErrorCatch };
-};
+  return { createErrorCatch }
+}

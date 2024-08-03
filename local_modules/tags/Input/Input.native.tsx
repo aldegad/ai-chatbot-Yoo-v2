@@ -2,15 +2,17 @@
 import { normalizeStyles } from '@local_modules/tags/normalize';
 import { InputElementProps } from '@local_modules/tags/type';
 import { useCallback, useEffect, useState } from 'react';
-import { KeyboardTypeOptions, NativeSyntheticEvent, TextInput, TextInputChangeEventData } from 'react-native';
+import { KeyboardTypeOptions, NativeSyntheticEvent, StyleSheet, TextInput, TextInputChangeEventData } from 'react-native';
 
-const Input = ({ 
+export default function NativeInput({ 
   style, 
   onChange, 
   onEnter,
   type,
   ...rest
-}: InputElementProps) => {
+}: InputElementProps) {
+  const flattenStyle = StyleSheet.flatten(style);
+
   const onInputChange = useCallback((e:NativeSyntheticEvent<TextInputChangeEventData>) => {
     onChange?.({
       native: e,
@@ -38,12 +40,13 @@ const Input = ({
   }, [type])
   
   return <TextInput 
+    cursorColor={flattenStyle.cursorColor}
+    selectionColor={flattenStyle.cursorColor}
+    selectionHandleColor={flattenStyle.cursorColor}
     style={[normalizeStyles.input, style]}
     secureTextEntry={secureTextEntry}
     keyboardType={keyboardType}
     onChange={onInputChange}
     onSubmitEditing={e => onEnter()}
     {...rest}></TextInput>;
-};
-
-export default Input;
+}

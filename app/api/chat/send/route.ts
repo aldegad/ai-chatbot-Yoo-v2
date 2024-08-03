@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import axios from 'axios'
+import { IChat } from '@type';
+import { authenticateUser } from '@api/_utils/auth';
+import Character from '@models/Character';
 
 const API_KEYS = [
   process.env.ANTHROPIC_API_KEY1, 
@@ -19,13 +22,26 @@ const TEST_USER = process.env.TEST_USER as string;
 let currentTokenIndex = 1; // 현재 사용 중인 토큰의 인덱스
 
 export async function POST(req: NextRequest) {
-  const { message } = await req.json();
-  const system = `${SYSTEM_CONFIG}\n\n{npc}:\n${TEST_NPC}\n\n{user}:\n${TEST_USER}`;
+  const authResult = await authenticateUser(req);
+  if ('error' in authResult) {
+    return NextResponse.json({ error: authResult.error }, { status: authResult.status });
+  }
+  const { user } = authResult;
 
-  const responseMessage = await attemptApiCall({ system, message });
+  try {
+    const { message, characterId }: IChat.SendParams = await req.json();
+    const character = await Character.findById(characterId);
 
-  console.log(responseMessage);
-  return Response.json({ message: `${responseMessage} POST`});
+    if(!character) return NextResponse.json({ error: '삭제된 캐릭터 입니다.' }, { status: 404 });
+
+    const system = `${SYSTEM_CONFIG}\n\n{npc}:\n${character.system}\n${character.secret}\n{user}:\n${TEST_USER}`;
+
+    const responseMessage = await attemptApiCall({ system, message });
+
+    return NextResponse.json({ message: responseMessage });
+  } catch(error) {
+    return NextResponse.json({ error: '대화 실패' }, { status: 500 });
+  }
 }
 
 const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inToken, _outToken }:any) => {
@@ -75,7 +91,7 @@ const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inT
     );
     return response.data.content[0].text;
   } else {
-    return await attemptApiCall({ 
+    return await attemptApiCall({
       // system, 
       message, 
       rejectedMessage: response.data.content[0].text,
@@ -87,6 +103,7 @@ const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inT
 }
 
 const validateString = (text:string) => {
+  return true;
   if(text.includes('{d}')) {
       return true;
   } else {

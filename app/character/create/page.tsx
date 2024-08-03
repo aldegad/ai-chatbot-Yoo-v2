@@ -2,11 +2,11 @@
 
 import React, { useCallback } from 'react'
 import Div from '@local_modules/tags/Div'
-import { borderRadius, color } from 'theme'
+import { borderRadius, boxShadow, color } from 'theme'
 import Button from '@local_modules/tags/Button'
 import axios from 'axios';
 import useFormModel from '@local_modules/useFormModel';
-import createStyle from '@local_modules/createStyle';
+import createStyle from '@local_modules/theme/createStyle';
 import clientEnv from '@clientEnv';
 import useLoading from '@components/useLoading';
 import InputComponent from '@components/inputComponent';
@@ -76,8 +76,9 @@ const styles = createStyle({
     maxWidth: 380,
     width: '100%',
     backgroundColor: 'white',
-    padding: `24 12 14`,
-    borderRadius: borderRadius.base
+    padding: `24 18 14`,
+    borderRadius: borderRadius.base,
+    boxShadow: boxShadow.base
   },
   inputGroup: {
     rowGap: 4

@@ -4,12 +4,12 @@ import { InputElementProps } from '@local_modules/tags/type';
 import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 
-const Input = ({ 
+export default function WebInput({ 
   style, 
   onChange, 
   onEnter,
   ...inputProps
-}: InputElementProps) => {
+}: InputElementProps) {
   const flattenStyle = StyleSheet.flatten([normalizeStyles.input, style]);
   
   const onInputChange = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +36,4 @@ const Input = ({
     onChange={onInputChange}
     onKeyUp={onInputEnter}
     {...inputProps}></input>;
-};
-
-export default Input;
+}

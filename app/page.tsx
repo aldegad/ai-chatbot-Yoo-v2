@@ -6,7 +6,7 @@ import { color } from '@theme/index'
 import H1 from '@local_modules/tags/H1'
 import useRouter from '@local_modules/router/useRouter'
 import Span from '@local_modules/tags/Span'
-import createStyle from '@local_modules/createStyle';
+import createStyle from '@local_modules/theme/createStyle';
 
 export default function App() {
   const router = useRouter();

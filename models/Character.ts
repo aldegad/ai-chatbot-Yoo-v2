@@ -7,7 +7,7 @@ const CharacterSchema: Schema = new Schema<ICharacter.Model>({
   system: { type: String, required: true, maxlength: 1000 },
   secret: { type: String, required: true, maxlength: 500 },
   creatorId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
-  visibility: { 
+  visibility: {
     type: String,
     required: true,
     enum: Object.values(ICharacter.VisibilityType),

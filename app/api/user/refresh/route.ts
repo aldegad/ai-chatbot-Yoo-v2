@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
     return response;
   } catch (error) {
     // 에러 처리 로직
+    console.error(error);
     return NextResponse.json({ error: 'Error refreshing token' }, { status: 401 });
   }
 }

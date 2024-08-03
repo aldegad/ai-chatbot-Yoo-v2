@@ -1,5 +1,5 @@
 
-import { ICharacter, IUser } from '@type';
+import { ICharacter, IChat, IUser } from '@type';
 import clientEnv from '@clientEnv';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import cookieManager from '@local_modules/cookieManager';
@@ -8,6 +8,20 @@ const instance = axios.create({
   baseURL: clientEnv.LOCAL_ADDRESS,
   timeout: 10000
 })
+
+instance.interceptors.request.use(
+  async (config) => {
+    if (!config.headers['Authorization']) {
+      const cookies = cookieManager();
+      const accessToken = await cookies.get('accessToken');
+      if (accessToken) {
+        config.headers['Authorization'] = `Bearer ${accessToken}`;
+      }
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+)
 
 let isRefreshing = false;
 let failedQueue: any[] = [];
@@ -19,10 +33,9 @@ const processQueue = (error: any, token: string | null = null) => {
     } else {
       prom.resolve(token);
     }
-  });
+  })
   failedQueue = [];
-};
-
+}
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -34,12 +47,12 @@ instance.interceptors.response.use(
           failedQueue.push({resolve, reject});
         }).then(token => {
           /** 
-           * 이거 필요없지 않나??? 아래쪽에서 setAuth를 해줬는데? 일단 주석처리.
+           * 이거 필요없지 않나??? 아래쪽에서 setAuth를 해줬는데? 일단 주석처리...  저 아래쪽에도 이거 해야되나본데...?
            * originalRequest.headers['Authorization'] = 'Bearer ' + token; */
           return instance(originalRequest);
         }).catch(err => {
           return Promise.reject(err);
-        });
+        })
       }
 
       originalRequest._retry = true;
@@ -77,8 +90,9 @@ export const apiClient = {
     return instance(config);
   },
   user: {
-    signUp: (params: IUser.SignUpParams): Promise<AxiosResponse<IUser.SignUpResponse>> => 
-      instance.post('/api/user/signUp', params),
+    signUp: (params: IUser.SignUpParams): Promise<AxiosResponse<IUser.SignUpResponse>> => {
+      return instance.post('/api/user/signUp', params)
+    },
     login: (params: IUser.LoginParams): Promise<AxiosResponse<IUser.LoginResponse>> => {
       const _instance = instance.post('/api/user/login', params);
       _instance.then(({ data }) => {
@@ -90,7 +104,7 @@ export const apiClient = {
       const cookies = cookieManager();
       const refreshToken = await cookies.get('refreshToken');
       const _instance = instance.post('/api/user/refresh', {
-        refresh_token: refreshToken
+        refreshToken
       })
       _instance.then(({data}) => {
         apiClient.setAuth(data);
@@ -101,15 +115,20 @@ export const apiClient = {
   },
   character: {
     create: (params: ICharacter.CreateParams): Promise<AxiosResponse<ICharacter.CreateResponse>> => {
-      return instance.post('/api/character/create', params);
+      return instance.post('/api/character/create', params)
     },
     list: (params: ICharacter.ListParams): Promise<AxiosResponse<ICharacter.ListResponse>> => {
-      return instance.post('/api/character/list', params);
+      return instance.post('/api/character/list', params)
     },
     mine: (params: ICharacter.MineParams): Promise<AxiosResponse<ICharacter.MineResponse>> => {
       return instance.get('/api/character/mine', {
         params
-      });
+      })
     },
+  },
+  chat: {
+    send: (params: IChat.SendParams): Promise<AxiosResponse<IChat.SendResponse>> => {
+      return instance.post('/api/chat/send', params)
+    }
   }
 }

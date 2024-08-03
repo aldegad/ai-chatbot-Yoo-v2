@@ -5,7 +5,7 @@ import Div from '@local_modules/tags/Div'
 import { borderRadius, color } from 'theme'
 import Button from '@local_modules/tags/Button'
 import useFormModel from '@local_modules/useFormModel'
-import createStyle from '@local_modules/createStyle'
+import createStyle from '@local_modules/theme/createStyle'
 import useRouter from '@local_modules/router/useRouter'
 import MyCharacterList from '@app/character/components/MyCharacterList'
 
@@ -25,7 +25,7 @@ export default function Page() {
     <Div style={styles.layout}>
       <Div style={styles.container}>
         <MyCharacterList/>
-        <Button style={styles.characterAddButton} onClick={onClick}>캐릭터 생성</Button>
+        <Button style={styles.characterAddButton} onClick={onClick}>+ 캐릭터 생성</Button>
       </Div>
     </Div>
   )
@@ -40,7 +40,7 @@ const styles = createStyle({
     padding: 24
   },
   container: {
-    rowGap: 8,
+    rowGap: 12,
     maxWidth: 380,
     width: '100%',
     backgroundColor: 'transparent',
@@ -52,6 +52,10 @@ const styles = createStyle({
     borderStyle: 'dashed',
     borderWidth: 1,
     borderColor: 'white',
-    color: 'white'
+    color: 'white',
+    borderRadius: borderRadius.base,
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })

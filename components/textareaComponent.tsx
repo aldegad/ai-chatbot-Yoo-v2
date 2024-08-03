@@ -1,4 +1,4 @@
-import createStyle from "@local_modules/createStyle";
+import createStyle from "@local_modules/theme/createStyle";
 import Div from "@local_modules/tags/Div";
 import Input from "@local_modules/tags/Input";
 import Label from "@local_modules/tags/Label";

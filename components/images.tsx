@@ -1,5 +1,5 @@
-import IconEye from 'public/assets/imgs/eye.svg';
-import IconEyeOff from 'public/assets/imgs/eye-off.svg';
+import IconEye from '@assets/imgs/eye.svg';
+import IconEyeOff from '@assets/imgs/eye-off.svg';
 
 export {
   IconEye,
