@@ -3,6 +3,7 @@ import Character from '@models/Character';
 import User from '@models/User';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
+import { ICharacter } from '@type';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -23,16 +24,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: '유효하지 않은 토큰입니다.' }, { status: 401 });
     }
 
-    const { name, system, visibility } = await req.json();
+    const { name, system, visibility, secret }: ICharacter.CreateParams = await req.json();
     
     const character = await Character.create({
       name,
       system,
-      creator: user._id,
+      secret,
+      creatorId: user._id,
       visibility
     });
 
-    return NextResponse.json({ data: character }, { status: 201 });
+    return NextResponse.json({ message: `${name} 캐릭터가 생성 되었습니다.` }, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Error character create' }, { status: 500 });

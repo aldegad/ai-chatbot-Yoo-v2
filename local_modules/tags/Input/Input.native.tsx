@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { KeyboardTypeOptions, NativeSyntheticEvent, TextInput, TextInputChangeEventData } from 'react-native';
 
 const Input = ({ 
-  control, 
   style, 
   onChange, 
   onEnter,

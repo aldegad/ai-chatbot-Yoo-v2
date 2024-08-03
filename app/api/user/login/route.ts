@@ -2,15 +2,15 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dbConnect from '@lib/mongodb';
+import { IUser } from '@type';
 import User from '@models/User';
-import { LoginParams } from '@api/type';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export async function POST(req: Request) {
   try {
     await dbConnect();
-    const { email, password }: LoginParams = await req.json();
+    const { email, password }: IUser.LoginParams = await req.json();
 
     const user = await User.findOne({ email });
     if (!user) {

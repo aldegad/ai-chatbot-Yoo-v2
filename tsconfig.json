@@ -40,8 +40,8 @@
       "@apiClient": [
         "app/api.client.tsx"
       ],
-      "@api/type": [
-        "app/api.type.tsx"
+      "@type": [
+        "app/type.tsx"
       ],
       "@lib/*": [
         "lib/*"

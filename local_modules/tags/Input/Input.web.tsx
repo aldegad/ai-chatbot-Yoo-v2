@@ -2,15 +2,16 @@
 import { normalizeStyles } from '@local_modules/tags/normalize';
 import { InputElementProps } from '@local_modules/tags/type';
 import React, { useCallback } from 'react';
+import { StyleSheet } from 'react-native';
 
 const Input = ({ 
-  control, 
   style, 
   onChange, 
   onEnter,
   ...inputProps
 }: InputElementProps) => {
-
+  const flattenStyle = StyleSheet.flatten([normalizeStyles.input, style]);
+  
   const onInputChange = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
     onChange?.({
       web: e,
@@ -31,7 +32,7 @@ const Input = ({
   }, [onChange]);
   
   return <input 
-    style={{ ...normalizeStyles.input, ...style }}
+    style={flattenStyle}
     onChange={onInputChange}
     onKeyUp={onInputEnter}
     {...inputProps}></input>;

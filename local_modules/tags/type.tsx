@@ -21,7 +21,6 @@ export type ButtonElementProps = ElementProps & {
 
 /** inputs */
 export type InputElementProps = {
-  control?: any;
   name?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -50,4 +49,12 @@ export type InputElementChangeEvent = {
   instance: {
     value: any;
   }
+}
+
+/** input - checkbox */
+export type CheckboxElementProps = {
+  label?: string;
+  value?: boolean;
+  disabled?: boolean;
+  onChange?: (e: InputElementChangeEvent) => void;
 }

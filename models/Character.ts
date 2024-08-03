@@ -1,27 +1,18 @@
 // models/Character.ts
-import mongoose, { Schema, Document } from 'mongoose';
-import { IUser } from './User';
+import { ICharacter, IUser } from '@type';
+import mongoose, { Schema, Document, Model, SchemaType } from 'mongoose';
 
-export enum VisibilityType {
-  PUBLIC = '공개',
-  PRIVATE = '비공개',
-  LINK = '링크공개'
-}
-
-export interface ICharacter extends Document {
-  name: string;
-  system: string;
-  creator: IUser['_id'];
-  visibility: VisibilityType;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const CharacterSchema: Schema = new Schema({
+const CharacterSchema: Schema = new Schema<ICharacter.Model>({
   name: { type: String, required: true, maxlength: 15 },
-  system: { type: String, required: true, maxlength: 100 },
-  creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  visibility: { type: String, enum: Object.values(VisibilityType), default: VisibilityType.PRIVATE }
+  system: { type: String, required: true, maxlength: 1000 },
+  secret: { type: String, required: true, maxlength: 500 },
+  creatorId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+  visibility: { 
+    type: String,
+    required: true,
+    enum: Object.values(ICharacter.VisibilityType),
+    default: ICharacter.VisibilityType.PRIVATE 
+  }
 }, { timestamps: true });
 
-export default mongoose.models.Character || mongoose.model('Character', CharacterSchema);
+export default mongoose.models.Character as Model<ICharacter.Model> || mongoose.model('Character', CharacterSchema);

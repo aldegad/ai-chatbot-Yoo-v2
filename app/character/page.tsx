@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Div from '@local_modules/tags/Div'
 import { borderRadius, color } from 'theme'
 import Button from '@local_modules/tags/Button'
 import useFormModel from '@local_modules/useFormModel';
 import createStyle from '@local_modules/createStyle';
 import useRouter from '@local_modules/router/useRouter';
+import dynamic from 'next/dynamic';
+import MyCharacterList from '@app/character/components/MyCharacterList';
 
 export default function Page() {
   const router = useRouter();
@@ -23,6 +25,7 @@ export default function Page() {
   return (
     <Div style={styles.layout}>
       <Div style={styles.container}>
+        <MyCharacterList/>
         <Button style={styles.characterAddButton} onClick={onClick}>캐릭터 생성</Button>
       </Div>
     </Div>

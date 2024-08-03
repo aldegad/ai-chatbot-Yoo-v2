@@ -12,12 +12,12 @@ import { isValidEmail, isValidPassword } from '@components/validation'
 import useRouter from '@local_modules/router/useRouter'
 import useLoading from '@components/useLoading'
 import { apiClient } from '@apiClient'
-import useCookies from '@local_modules/useCookies'
+import useCookies from '@local_modules/cookieManager'
+import cookieManager from '@local_modules/cookieManager'
 
 export default function Page() {
   const router = useRouter();
   const { createLoading } = useLoading();
-  const { setCookie } = useCookies();
 
   const [fields, modelValue] = useFormModel({
     email: '',
@@ -32,14 +32,11 @@ export default function Page() {
     loading.present();
 
     try {
-      const { data } = await apiClient.public.login({
+      const { data } = await apiClient.user.login({
         email: fields.email,
         password: fields.password
       });
       alert(data.message);
-
-      setCookie('token', data.token);
-      setCookie('refreshToken', data.refreshToken);
 
       router.replace('/character');
     } catch (error) {

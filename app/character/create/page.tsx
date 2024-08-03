@@ -11,31 +11,38 @@ import clientEnv from '@clientEnv';
 import useLoading from '@components/useLoading';
 import InputComponent from '@components/inputComponent';
 import TextareaComponent from '@components/textareaComponent';
-import useCookies from '@local_modules/useCookies';
+import useCookies from '@local_modules/cookieManager';
+import { apiClient } from '@apiClient';
+import { ICharacter } from '@type';
+import { useErrorCatch } from '@components/useErrorCatch';
+import useRouter from '@local_modules/router/useRouter';
+import Checkbox from '@local_modules/tags/Checkbox';
 
 export default function Page() {
   const { createLoading } = useLoading();
-  const { getCookie } = useCookies();
+  const { createErrorCatch } = useErrorCatch();
+  const router = useRouter();
 
-  const [fields, modelValue] = useFormModel({
+
+  const [fields, modelValue] = useFormModel<ICharacter.CreateParams>({
     name: '',
-    system: ''
+    system: '',
+    secret: '',
+    visibility: ICharacter.VisibilityType.PRIVATE
   });
 
   const onClick = useCallback(async() => {
     const loading = await createLoading();
     loading.present();
-
-    const token = getCookie('token');
     
-    const response = await axios.post(`${clientEnv.LOCAL_ADDRESS}/api/protected/character`, {
-      name: fields.name,
-      system: fields.system
-    }, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
+    try {
+      const { data } = await apiClient.character.create(fields);
+      alert(data.message);
+
+      router.back();
+    } catch(error) {
+      createErrorCatch(error);
+    }
 
     loading.dismiss();
   }, [fields]);
@@ -44,9 +51,13 @@ export default function Page() {
     <Div style={styles.layout}>
       <Div style={styles.container}>
         <InputComponent label="캐릭터 이름" {...modelValue('name')}/>
-        <TextareaComponent label="캐릭터 설정" {...modelValue('system')}/>
+        <TextareaComponent label="캐릭터 설정" {...modelValue('system')} maxLength={1000}/>
+        <TextareaComponent label="캐릭터 비밀" {...modelValue('secret')} maxLength={500}/>
+        <Button>공개</Button>
+        <Button>V비공개</Button>
+        <Button>링크공개</Button>
 
-        <Button style={styles.submitButton} onClick={onClick}>다음</Button>
+        <Button style={styles.submitButton} onClick={onClick}>생성</Button>
       </Div>
     </Div>
   );

@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@lib/mongodb';
-import User, { IUser } from '@models/User';
-import { SignUpParams } from '@api/type';
+import { IUser } from '@type';
+import User from '@models/User';
+
 
 export async function POST(req: NextRequest) {
   try {
     await dbConnect();
-    const { email, password }: SignUpParams = await req.json();
+    const { email, password }: IUser.SignUpParams = await req.json();
 
-    const existingUser = await User.findOne<IUser>({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json({ error: '이미 회원인 이메일 입니다. 로그인을 해주세요.' }, { status: 400 });
     }

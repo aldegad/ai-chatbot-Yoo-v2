@@ -6,8 +6,6 @@ import Div from '@local_modules/tags/Div'
 import { borderRadius, color } from 'theme'
 import Button from '@local_modules/tags/Button'
 import useFormModel from '@local_modules/useFormModel'
-import axios, { AxiosResponse } from 'axios'
-import clientEnv from '@clientEnv'
 import InputComponent from '@components/inputComponent'
 import { isValidEmail, isValidPassword } from '@components/validation'
 import useRouter from '@local_modules/router/useRouter'
@@ -32,7 +30,7 @@ export default function Page() {
     loading.present();
     
     try {
-      const response = await apiClient.public.signUp({
+      const response = await apiClient.user.signUp({
         email: fields.email,
         password: fields.password
       })
