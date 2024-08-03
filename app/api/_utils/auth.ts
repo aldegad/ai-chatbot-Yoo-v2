@@ -1,5 +1,5 @@
 // app/api/_utils/auth.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 import dbConnect from '@lib/mongodb';
 import User from '@models/User';
@@ -28,6 +28,11 @@ export async function authenticateUser(req: NextRequest) {
     return { user };
   } catch (error) {
     console.error(error);
-    return { error: 'Error authentication user' , status: 500 };
+    if(error instanceof Error) {
+      if(error.name === 'TokenExpiredError') {
+        return { error: '토큰이 만료되었습니다.', status: 401 };
+      }
+    }
+    return { error: 'Error authentication user: ' + error, status: 500 };
   }
 }

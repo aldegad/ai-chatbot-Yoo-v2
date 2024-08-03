@@ -14,10 +14,12 @@ import useLoading from '@components/useLoading'
 import { apiClient } from '@apiClient'
 import useCookies from '@local_modules/cookieManager'
 import cookieManager from '@local_modules/cookieManager'
+import { useErrorCatch } from '@components/useErrorCatch'
 
 export default function Page() {
   const router = useRouter();
   const { createLoading } = useLoading();
+  const { createErrorCatch } = useErrorCatch();
 
   const [fields, modelValue] = useFormModel({
     email: '',
@@ -40,11 +42,7 @@ export default function Page() {
 
       router.replace('/character');
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      } else {
-        alert('알 수 없는 오류가 발생했습니다.');
-      }
+      createErrorCatch(error);
     }
 
     loading.dismiss();

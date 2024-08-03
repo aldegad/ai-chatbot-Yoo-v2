@@ -1,7 +1,7 @@
-import IconEyeOn from 'public/assets/imgs/eye_on.svg';
-import IconEyeOff from 'public/assets/imgs/eye_off.svg';
+import IconEye from 'public/assets/imgs/eye.svg';
+import IconEyeOff from 'public/assets/imgs/eye-off.svg';
 
 export {
-  IconEyeOn,
+  IconEye,
   IconEyeOff
 }

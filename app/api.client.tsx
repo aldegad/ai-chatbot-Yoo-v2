@@ -1,68 +1,114 @@
 
 import { ICharacter, IUser } from '@type';
 import clientEnv from '@clientEnv';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import cookieManager from '@local_modules/cookieManager';
 
 const instance = axios.create({
   baseURL: clientEnv.LOCAL_ADDRESS,
   timeout: 10000
-});
+})
 
-// 응답 인터셉터로 에러 처리
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
 instance.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (axios.isAxiosError(error) && error.response) {
-      // 서버에서 보낸 에러 메시지가 있으면 그것을 사용
-      throw new Error(error.response.data.error || '알 수 없는 오류가 발생했습니다.');
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && error.response?.data?.error === '토큰이 만료되었습니다.' && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({resolve, reject});
+        }).then(token => {
+          /** 
+           * 이거 필요없지 않나??? 아래쪽에서 setAuth를 해줬는데? 일단 주석처리.
+           * originalRequest.headers['Authorization'] = 'Bearer ' + token; */
+          return instance(originalRequest);
+        }).catch(err => {
+          return Promise.reject(err);
+        });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      return new Promise((resolve, reject) => {
+        apiClient.user.refresh()
+          .then(({data}) => {
+            apiClient.setAuth(data);
+            processQueue(null, data.accessToken);
+            resolve(instance(originalRequest));
+          })
+          .catch((err) => {
+            processQueue(err, null);
+            reject(err);
+          })
+          .finally(() => {
+            isRefreshing = false;
+          });
+      });
     }
-    throw new Error('네트워크 오류가 발생했습니다.');
+
+    return Promise.reject(error);
   }
-);
+)
 
 export const apiClient = {
+  setAuth: ({ accessToken, refreshToken }: { accessToken: string, refreshToken: string }) => {
+    const cookies = cookieManager();
+    cookies.set('accessToken', accessToken);
+    cookies.set('refreshToken', refreshToken);
+    instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  },
+  retryRequest: (config: AxiosRequestConfig) => {
+    return instance(config);
+  },
   user: {
     signUp: (params: IUser.SignUpParams): Promise<AxiosResponse<IUser.SignUpResponse>> => 
       instance.post('/api/user/signUp', params),
     login: (params: IUser.LoginParams): Promise<AxiosResponse<IUser.LoginResponse>> => {
       const _instance = instance.post('/api/user/login', params);
       _instance.then(({ data }) => {
-        const cookies = cookieManager();
-        cookies.set('token', data.token);
-        cookies.set('refreshToken', data.refreshToken);
+        apiClient.setAuth(data);
       })
+      return _instance;
+    },
+    refresh: async(): Promise<AxiosResponse<IUser.RefreshResponse>> => {
+      const cookies = cookieManager();
+      const refreshToken = await cookies.get('refreshToken');
+      const _instance = instance.post('/api/user/refresh', {
+        refresh_token: refreshToken
+      })
+      _instance.then(({data}) => {
+        apiClient.setAuth(data);
+      });
       return _instance;
     }
     // 다른 API 호출들...
   },
   character: {
-    create: async(params: ICharacter.CreateParams): Promise<AxiosResponse<ICharacter.CreateResponse>> => {
-      const cookies = cookieManager();
-      const token = await cookies.get('token');
-      return instance.post('/api/character/create', params, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+    create: (params: ICharacter.CreateParams): Promise<AxiosResponse<ICharacter.CreateResponse>> => {
+      return instance.post('/api/character/create', params);
     },
-    list: async(params: ICharacter.ListParams): Promise<AxiosResponse<ICharacter.ListResponse>> => {
-      const cookies = cookieManager();
-      const token = await cookies.get('token');
-      return instance.post('/api/character/list', params, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+    list: (params: ICharacter.ListParams): Promise<AxiosResponse<ICharacter.ListResponse>> => {
+      return instance.post('/api/character/list', params);
     },
-    mine: async(params: ICharacter.MineParams): Promise<AxiosResponse<ICharacter.MineResponse>> => {
-      const cookies = cookieManager();
-      const token = await cookies.get('token');
+    mine: (params: ICharacter.MineParams): Promise<AxiosResponse<ICharacter.MineResponse>> => {
       return instance.get('/api/character/mine', {
-        params,
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        params
       });
     },
   }

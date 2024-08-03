@@ -1,14 +1,13 @@
-"use client";
+"use client"
 
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import Div from '@local_modules/tags/Div'
 import { borderRadius, color } from 'theme'
 import Button from '@local_modules/tags/Button'
-import useFormModel from '@local_modules/useFormModel';
-import createStyle from '@local_modules/createStyle';
-import useRouter from '@local_modules/router/useRouter';
-import dynamic from 'next/dynamic';
-import MyCharacterList from '@app/character/components/MyCharacterList';
+import useFormModel from '@local_modules/useFormModel'
+import createStyle from '@local_modules/createStyle'
+import useRouter from '@local_modules/router/useRouter'
+import MyCharacterList from '@app/character/components/MyCharacterList'
 
 export default function Page() {
   const router = useRouter();
@@ -16,11 +15,11 @@ export default function Page() {
   const [fields, modelValue] = useFormModel({
     characterName: '',
     characterSetting: ''
-  });
+  })
 
   const onClick = useCallback(async() => {
     router.push('/character/create');
-  }, [fields]);
+  }, [fields])
 
   return (
     <Div style={styles.layout}>
@@ -29,7 +28,7 @@ export default function Page() {
         <Button style={styles.characterAddButton} onClick={onClick}>캐릭터 생성</Button>
       </Div>
     </Div>
-  );
+  )
 }
 
 const styles = createStyle({
@@ -55,4 +54,4 @@ const styles = createStyle({
     borderColor: 'white',
     color: 'white'
   }
-});
+})

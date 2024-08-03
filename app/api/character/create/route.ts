@@ -1,32 +1,19 @@
-import dbConnect from '@lib/mongodb';
-import Character from '@models/Character';
-import User from '@models/User';
-import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
-import { ICharacter } from '@type';
-
-const JWT_SECRET = process.env.JWT_SECRET as string;
+import { NextRequest, NextResponse } from 'next/server'
+import Character from '@models/Character'
+import { ICharacter } from '@type'
+import { authenticateUser } from '@api/_utils/auth'
 
 export async function POST(req: NextRequest) {
-  const authHeader = req.headers.get('Authorization');
-  const token = authHeader && authHeader.startsWith('Bearer ') 
-    ? authHeader.slice(7) 
-    : null;
+  const authResult = await authenticateUser(req);
+  if ('error' in authResult) {
+    return NextResponse.json({ error: authResult.error }, { status: authResult.status });
+  }
+  const { user } = authResult;
 
-  if(!token) return NextResponse.json({ error: '인증되지 않았습니다.' }, { status: 401 });
-  console.log(token);
   try {
-    await dbConnect();
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    const user = await User.findById(decoded.userId);
-
-    if (!user) {
-      return NextResponse.json({ error: '유효하지 않은 토큰입니다.' }, { status: 401 });
-    }
-
     const { name, system, visibility, secret }: ICharacter.CreateParams = await req.json();
     
-    const character = await Character.create({
+    await Character.create({
       name,
       system,
       secret,

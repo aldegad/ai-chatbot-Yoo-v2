@@ -38,7 +38,13 @@ export namespace IUser {
     password: string
   }
   export type LoginResponse = ApiResponse & {
-    token: string,
+    accessToken: string,
+    refreshToken: string
+  }
+
+  export type RefreshParams = null;
+  export type RefreshResponse = ApiResponse & {
+    accessToken: string,
     refreshToken: string
   }
 }

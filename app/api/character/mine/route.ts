@@ -1,13 +1,8 @@
-import dbConnect from '@lib/mongodb';
-import User from '@models/User';
-import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
-import Character from '@models/Character';
-import { authenticateUser } from '@api/_utils/auth';
-import { ICharacter } from '@type';
-import { FilterQuery } from 'mongoose';
-
-const JWT_SECRET = process.env.JWT_SECRET as string;
+import { NextRequest, NextResponse } from 'next/server'
+import Character from '@models/Character'
+import { authenticateUser } from '@api/_utils/auth'
+import { ICharacter } from '@type'
+import { FilterQuery } from 'mongoose'
 
 export async function GET(req: NextRequest) {
   const authResult = await authenticateUser(req);

@@ -1,6 +1,7 @@
 "use client"
 
 import { apiClient } from "@apiClient";
+import { useErrorCatch } from "@components/useErrorCatch";
 import createStyle from "@local_modules/createStyle";
 import { formatDate } from "@local_modules/formatDate";
 import Div from "@local_modules/tags/Div";
@@ -9,13 +10,18 @@ import { ICharacter } from "@type";
 import { useEffect, useState } from "react";
 
 export default function MyCharacterList() {
+  const { createErrorCatch } = useErrorCatch();
 
   const [myCharacterList, setMyCharacterList] = useState<ICharacter.MineResponse>({ list: [], totalCount: 0 });
 
   useEffect(() => {
     (async() => {
-      const { data } = await apiClient.character.mine({ visibility: 'ALL' });
-      setMyCharacterList(data);
+      try {
+        const { data } = await apiClient.character.mine({ visibility: 'ALL' });
+        setMyCharacterList(data);
+      } catch(error) {
+        createErrorCatch(error);
+      }
     })()
   }, [])
 

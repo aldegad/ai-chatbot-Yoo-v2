@@ -1,4 +1,4 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { IconEye, IconEyeOff } from "@components/images";
 import createStyle from "@local_modules/createStyle";
 import Button from "@local_modules/tags/Button";
 import Div from "@local_modules/tags/Div";
@@ -53,8 +53,8 @@ export default function InputComponent({ label, ...inputProps }:InputComponentPr
           <Button style={styles.togglePasswordVisibleButton} onClick={onTogglePasswordVisible}>
             {
               passwordVisible ?
-              <Ionicons name="eye-off"/> : 
-              <Ionicons name="eye"/>
+              <IconEyeOff width={20} height={20}/> : 
+              <IconEye width={20} height={20}/>
             }
           </Button> : null
         }
