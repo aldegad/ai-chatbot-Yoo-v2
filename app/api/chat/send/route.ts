@@ -43,8 +43,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: '대화 실패' }, { status: 500 });
   }
 }
-
-const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inToken, _outToken }:any) => {
+type AttemptApiCallProps = {
+  system:string,
+  message:string,
+  rejectedMessage?:string,
+  _tryCount?:number,
+  _inToken?:number,
+  _outToken?:number
+}
+const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inToken, _outToken }:AttemptApiCallProps) : Promise<string> => {
   let tryCount = _tryCount ? _tryCount + 1 : 1;
   let totalInToken = _inToken || 0;
   let totalOutToken = _outToken || 0;
@@ -92,7 +99,7 @@ const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inT
     return response.data.content[0].text;
   } else {
     return await attemptApiCall({
-      // system, 
+      system, 
       message, 
       rejectedMessage: response.data.content[0].text,
       _tryCount: tryCount,

@@ -1,6 +1,5 @@
-import { Link } from "expo-router";
-import { LinkProps } from "expo-router/build/link/Link";
+import { Link, LinkProps } from "expo-router";
 
-export default function NativeLink(props:LinkProps) {
+export default function NativeLink(props:LinkProps<any>) {
   return <Link {...props}/>
 }

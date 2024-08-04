@@ -4,7 +4,6 @@ import { useCallback } from 'react';
 import { TextInput } from 'react-native';
 
 export default function NativeTextarea({ 
-  control, 
   style, 
   onChange, 
   onEnter,

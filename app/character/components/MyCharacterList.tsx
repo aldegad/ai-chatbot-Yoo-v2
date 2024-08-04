@@ -37,7 +37,7 @@ export default function MyCharacterList() {
     <Div style={styles.list}>
       {
         myCharacterList.list.map(character => (
-          <Button key={character._id} style={styles.item} onClick={() => onNavToChat(character._id)}>
+          <Button key={String(character._id)} style={styles.item} onClick={() => onNavToChat(character._id)}>
             <Div style={styles.name}>{character.name}</Div>
             <Div>{character.system}</Div>
             <Div style={styles.createAt}>{formatDate(character.createdAt)}</Div>

@@ -4,7 +4,6 @@ import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 
 export default function WebTextarea({ 
-  control, 
   style, 
   onChange, 
   onEnter,

@@ -1,4 +1,4 @@
-import { LinkProps as WebLinkProps } from "expo-router/build/link/Link";
-import { LinkProps as NativeLinkProps } from "next/link";
+import { LinkProps as NativeLinkProps } from "expo-router";
+import { LinkProps as WebLinkProps } from "next/link";
 
-export type LinkProps = WebLinkProps | NativeLinkProps;
+export type LinkProps = WebLinkProps | NativeLinkProps<any>;

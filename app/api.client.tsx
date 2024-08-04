@@ -46,9 +46,8 @@ instance.interceptors.response.use(
         return new Promise((resolve, reject) => {
           failedQueue.push({resolve, reject});
         }).then(token => {
-          /** 
-           * 이거 필요없지 않나??? 아래쪽에서 setAuth를 해줬는데? 일단 주석처리...  저 아래쪽에도 이거 해야되나본데...?
-           * originalRequest.headers['Authorization'] = 'Bearer ' + token; */
+          /** originRequest는 헤더가 안바뀌는 것 같다. */
+          originalRequest.headers['Authorization'] = 'Bearer ' + token;
           return instance(originalRequest);
         }).catch(err => {
           return Promise.reject(err);
@@ -63,6 +62,8 @@ instance.interceptors.response.use(
           .then(({data}) => {
             apiClient.setAuth(data);
             processQueue(null, data.accessToken);
+            /** originRequest는 헤더가 안바뀌는 것 같다. */
+            originalRequest.headers['Authorization'] = 'Bearer ' + data.accessToken;
             resolve(instance(originalRequest));
           })
           .catch((err) => {
