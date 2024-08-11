@@ -44,7 +44,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build": "next build",
-    "typescript": "npx expo install -- --save-dev typescript @types/react",
+    "install:typescript": "npx expo install -- --save-dev typescript @types/react",
     "install:core:expo": "npx expo install expo-splash-screen && npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar",
     "install:core:nextjs": "npm install ignore-loader",
     "install:core": "npm run install:core:expo && npm run install:core:nextjs",
@@ -54,7 +54,7 @@
     "install:svg:nextjs": "npm install @svgr/webpack",
     "install:svg": "npm run install:svg:expo && npm run install:svg:nextjs",
     "install:backend": "npm install axios cors mongodb mongoose bcryptjs jsonwebtoken && npm install --save-dev @types/bcryptjs @types/jsonwebtoken",
-    "install:all": "npm run install:core && npm run install:webView && npm run install:cookie && npm run install:svg && npm run install:backend"
+    "install:all": "install:typescript && npm run install:core && npm run install:webView && npm run install:cookie && npm run install:svg && npm run install:backend"
   },
   "name": "ai-chatbot-yoo-v2",
   "main": "expo-router/entry",
