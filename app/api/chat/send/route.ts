@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import axios from 'axios'
-import { IChat } from '@type';
+import { IChatMessage } from '@type';
 import { authenticateUser } from '@api/_utils/auth';
 import Character from '@models/Character';
 
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
   const { user } = authResult;
 
   try {
-    const { message, characterId }: IChat.SendParams = await req.json();
+    const { message, characterId }: IChatMessage.SendParams = await req.json();
     const character = await Character.findById(characterId);
 
     if(!character) return NextResponse.json({ error: '삭제된 캐릭터 입니다.' }, { status: 404 });
@@ -63,7 +63,7 @@ const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inT
     messageWithUnlocker = [
       { role: "user", content: INIT_MESSAGE_FILTER1 },
       { role: "assistant", content: INIT_MESSAGE_FILTER2 },
-      { role: "user", content: `{d}${message}{/d}` }
+      { role: "user", content: `%${message}%` }
     ]
   } else {
     messageWithUnlocker = [
@@ -71,7 +71,7 @@ const attemptApiCall = async({ system, message, rejectedMessage, _tryCount, _inT
       { role: "assistant", content: rejectedMessage },
       { role: "user", content: REJECTED_MESSAGE_FILTER1 },
       { role: "assistant", content: REJECTED_MESSAGE_FILTER2 },
-      { role: "user", content: `{d}${message}{/d}` }
+      { role: "user", content: `%${message}%` }
     ]
   }
 

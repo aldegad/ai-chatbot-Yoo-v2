@@ -11,41 +11,41 @@
   - **422 Unprocessable Entity**: 요청의 문법은 올바르지만, 의미론적 오류로 인해 요청을 처리할 수 없음을 나태냅니다.
  */
 
-import { Document, Schema } from 'mongoose';
+import { Document, Schema } from 'mongoose'
 
 export type ApiResponse = {
-  message?: string,
+  message?: string
   error?: string
 }
-export type ALL = 'ALL';
+export type ALL = 'ALL'
 
 export namespace IUser {
   export interface Model extends Document {
-    _id: Schema.Types.ObjectId;
-    email: string;
-    password: string;
-    createdAt: Date;
-    updatedAt: Date;
+    _id: Schema.Types.ObjectId
+    email: string
+    password: string
+    createdAt: Date
+    updatedAt: Date
   }
 
   export type SignUpParams = {
-    email: string,
+    email: string
     password: string
   }
   export type SignUpResponse = ApiResponse
   
   export type LoginParams = {
-    email: string,
+    email: string
     password: string
   }
   export type LoginResponse = ApiResponse & {
-    accessToken: string,
+    accessToken: string
     refreshToken: string
   }
 
-  export type RefreshParams = null;
+  export type RefreshParams = null
   export type RefreshResponse = ApiResponse & {
-    accessToken: string,
+    accessToken: string
     refreshToken: string
   }
 }
@@ -59,63 +59,86 @@ export namespace ICharacter {
   
   export interface Model extends Document {
     _id: Schema.Types.ObjectId
-    name: string;
-    system: string;
-    secret: string;
-    creatorId: IUser.Model['_id'];
-    visibility: VisibilityType;
-    createdAt: Date;
-    updatedAt: Date;
+    name: string
+    system: string
+    secret: string
+    creatorId: IUser.Model['_id']
+    visibility: VisibilityType
+    createdAt: Date
+    updatedAt: Date
   }
 
   export type CreateParams = {
-    name: string,
-    visibility: VisibilityType,
-    system: string,
+    name: string
+    visibility: VisibilityType
+    system: string
     secret: string
   }
-  export type CreateResponse = ApiResponse;
+  export type CreateResponse = ApiResponse
 
   export type ListParams = {
-    searchText: string,
-    offset: number,
+    searchText: string
+    offset: number
     length: number
   }
   export type ListResponse = {
-    list: Array<Omit<Model, 'secrete'>>,
-    totalCount: number
+    list: Array<Omit<Model, 'secrete'>>
+    length: number
   }
 
   export type MineParams = {
-    visibility: VisibilityType | ALL,
+    visibility: VisibilityType | ALL
   }
   export type MineResponse = ApiResponse & {
-    list: Array<Omit<Model, 'secrete'>>,
-    totalCount: number
+    list: Array<Omit<Model, 'secrete'>>
+    length: number
   }
 }
 
 export namespace IChatRoom {
   export interface Model extends Document {
-    _id: Schema.Types.ObjectId;
-    username: string;
-    userSystem: string;
-    createdAt: Date;
-    updatedAt: Date;
+    _id: Schema.Types.ObjectId
+    userId: IUser.Model['_id']
+    characterId: ICharacter.Model['_id']
+    userName: string
+    userSystem: string
+    createdAt: Date
+    updatedAt: Date
+  }
+
+  export type CreateParams = {
+    characterId: ICharacter.Model['_id']
+    userName: string
+    userSystem: string
+  }
+  export type CreateResponse = ApiResponse
+
+  export type ListParams = {
+    characterId: ICharacter.Model['_id']
+  }
+  export type ListResponse = {
+    list: Array<Model & {
+      character: ICharacter.Model
+      message: {
+        lastContent: string
+        length: number
+      }
+    }>
+    length: number
   }
 }
 
-export namespace IChat {
+export namespace IChatMessage {
   export interface Model extends Document {
-    _id: Schema.Types.ObjectId;
-    role: 'user'|'assistance';
-    content: string;
-    createdAt: Date;
-    updatedAt: Date;
+    _id: Schema.Types.ObjectId
+    role: 'user'|'assistance'
+    content: string
+    createdAt: Date
+    updatedAt: Date
   }
 
   export type SendParams = {
-    characterId: string,
+    characterId: string
     message: string
   }
   export type SendResponse = ApiResponse & {

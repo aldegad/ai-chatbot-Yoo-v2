@@ -1,5 +1,5 @@
 
-import { ICharacter, IChat, IUser } from '@type';
+import { ICharacter, IChatMessage, IUser } from '@type';
 import clientEnv from '@clientEnv';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import cookieManager from '@local_modules/cookieManager';
@@ -128,7 +128,7 @@ export const apiClient = {
     },
   },
   chat: {
-    send: (params: IChat.SendParams): Promise<AxiosResponse<IChat.SendResponse>> => {
+    send: (params: IChatMessage.SendParams): Promise<AxiosResponse<IChatMessage.SendResponse>> => {
       return instance.post('/api/chat/send', params)
     }
   }

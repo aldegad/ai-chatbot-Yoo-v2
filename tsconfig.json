@@ -41,7 +41,7 @@
         "app/api.client.tsx"
       ],
       "@type": [
-        "app/types.ts"
+        "lib/types.ts"
       ],
       "@lib/*": [
         "lib/*"

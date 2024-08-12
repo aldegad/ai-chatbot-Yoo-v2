@@ -17,28 +17,6 @@ export function middleware(request: NextRequest) {
     return new Response(null, { headers: response.headers });
   }
 
-  // 보호된 경로에 대한 토큰 검증
-  /* if (request.nextUrl.pathname.startsWith('/api/protected')) {
-    const token = request.cookies.get('token')?.value || request.headers.get('Authorization')?.split(' ')[1];
-
-    if (!token) {
-      return new NextResponse(
-        JSON.stringify({ message: 'Authentication required' }),
-        { status: 401, headers: response.headers }
-      );
-    }
-
-    try {
-      jwt.verify(token, JWT_SECRET);
-      return response;
-    } catch (error) {
-      return new NextResponse(
-        JSON.stringify({ message: 'Invalid token' }),
-        { status: 401, headers: response.headers }
-      );
-    }
-  } */
-
   return response;
 }
 
