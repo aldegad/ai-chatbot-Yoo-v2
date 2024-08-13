@@ -88,18 +88,26 @@ npm install @expo/next-adapter @expo/vector-icons @react-navigation/native @reac
 
 .env 파일을 생성하고 필요한 환경 변수를 설정합니다:
 
-```
-NEXT_PUBLIC_API_URL=<API_URL>
-MONGODB_URI=<MongoDB_Connection_String>
-JWT_SECRET=<Your_JWT_Secret>
-```
-
-### 4. Expo와 Next.js 설정
-
-expo-next-adapter를 사용하여 Expo와 Next.js를 통합합니다:
-
 ```bash
-npx expo-next-adapter
+## Keys
+# https://console.anthropic.com/settings/keys
+ANTHROPIC_API_KEY1=<YOUR_ANTHROPIC_API_KEY1>
+ANTHROPIC_API_KEY2=<YOUR_ANTHROPIC_API_KEY2>
+ANTHROPIC_API_KEY3=<YOUR_ANTHROPIC_API_KEY3>
+ANTHROPIC_API_KEY4=<YOUR_ANTHROPIC_API_KEY4>
+# https://platform.openai.com/api-keys
+GPT_API_KEY1=<YOUR_GPT_API_KEY1>
+# mongoDB
+MONGODB_URI=<YOUR_MONGODB_URI>
+# JWT
+JWT_SECRET=<YOUR_JWT_SECRET>
+REFRESH_SECRET=<YOUR_REFRESH_SECRET>
+# config
+SYSTEM_CONFIG=<YOUR_SYSTEM_CONFIG>
+INIT_MESSAGE_FILTER1=<YOUR_INIT_MESSAGE_FILTER1>
+INIT_MESSAGE_FILTER2=<YOUR_INIT_MESSAGE_FILTER2>
+REJECTED_MESSAGE_FILTER1=<YOUR_REJECTED_MESSAGE_FILTER1>
+REJECTED_MESSAGE_FILTER2=<YOUR_REJECTED_MESSAGE_FILTER2>
 ```
 
 ### 5. 서버 실행

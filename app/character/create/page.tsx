@@ -4,19 +4,15 @@ import React, { useCallback } from 'react'
 import Div from '@local_modules/tags/Div'
 import { borderRadius, boxShadow, color } from 'theme'
 import Button from '@local_modules/tags/Button'
-import axios from 'axios';
 import useFormModel from '@local_modules/useFormModel';
 import createStyle from '@local_modules/theme/createStyle';
-import clientEnv from '@clientEnv';
 import useLoading from '@components/useLoading';
 import InputComponent from '@components/inputComponent';
 import TextareaComponent from '@components/textareaComponent';
-import useCookies from '@local_modules/cookieManager';
 import { apiClient } from '@apiClient';
 import { ICharacter } from '@type';
 import { useErrorCatch } from '@components/useErrorCatch';
 import useRouter from '@local_modules/router/useRouter';
-import Checkbox from '@local_modules/tags/Checkbox';
 
 export default function Page() {
   const { createLoading } = useLoading();
@@ -51,8 +47,8 @@ export default function Page() {
     <Div style={styles.layout}>
       <Div style={styles.container}>
         <InputComponent label="캐릭터 이름" {...modelValue('name')}/>
-        <TextareaComponent label="캐릭터 설정" {...modelValue('system')} maxLength={1000}/>
-        <TextareaComponent label="캐릭터 비밀" {...modelValue('secret')} maxLength={500}/>
+        <TextareaComponent label="캐릭터 공개 설정" {...modelValue('system')} maxLength={1000}/>
+        <TextareaComponent label="캐릭터 비공개 설정" {...modelValue('secret')} maxLength={500}/>
         <Button>공개</Button>
         <Button>V비공개</Button>
         <Button>링크공개</Button>
@@ -110,4 +106,4 @@ const styles = createStyle({
     borderRadius: 50,
     color: 'white'
   }
-});
+})

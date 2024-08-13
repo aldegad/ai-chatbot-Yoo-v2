@@ -131,6 +131,7 @@ export namespace IChatRoom {
 export namespace IChatMessage {
   export interface Model extends Document {
     _id: Schema.Types.ObjectId
+    ChatRoomId: IChatRoom.Model['_id']
     role: 'user'|'assistance'
     content: string
     createdAt: Date

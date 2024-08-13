@@ -49,10 +49,10 @@ export default function Page() {
   return (
     <Div style={styles.layout}>
       <Div style={styles.container}>
-        <H1 style={styles.title}>로그인</H1>
+        <H1 style={styles.title}>대화 생성</H1>
         <InputComponent label="email" type="email" {...modelValue('email')}/>
         <InputComponent label="password" placeholder="영문+숫자 8자이상" type="password" {...modelValue('password')} onEnter={onSubmit}/>
-        <Button style={styles.button} onClick={onSubmit}>채팅방 생성</Button>
+        <Button style={styles.button} onClick={onSubmit}>대화 생성</Button>
       </Div>
     </Div>
   )
