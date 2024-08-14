@@ -76,6 +76,11 @@ export namespace ICharacter {
   }
   export type CreateResponse = ApiResponse
 
+  export type DeleteParams = {
+    characterId: Model['_id']
+  }
+  export type DeleteResponse = ApiResponse
+
   export type ListParams = {
     searchText: string
     offset: number

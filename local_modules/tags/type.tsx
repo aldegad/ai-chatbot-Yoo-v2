@@ -11,7 +11,9 @@ export type ElementProps = {
 export type ElementClickEvent = {
   native?: GestureResponderEvent
   web?: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  instance: any
+  instance: {
+    stop: () => void
+  } & any
 }
 
 /** button */

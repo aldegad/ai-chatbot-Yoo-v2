@@ -1,37 +1,51 @@
 "use client"
 
-import { apiClient } from "@apiClient";
-import { useErrorCatch } from "@components/useErrorCatch";
-import createStyle from "@local_modules/theme/createStyle";
-import { formatDate } from "@local_modules/formatDate";
-import Div from "@local_modules/tags/Div";
-import { borderRadius, color } from "@theme/index";
-import { ICharacter } from "@type";
-import { useEffect, useState } from "react";
-import Button from "@local_modules/tags/Button";
-import useRouter from "@local_modules/router/useRouter";
-import { Schema } from "mongoose";
-import { IconTrashOutline } from "@components/images";
+import { apiClient } from "@apiClient"
+import { useErrorCatch } from "@components/useErrorCatch"
+import createStyle from "@local_modules/theme/createStyle"
+import { formatDate } from "@local_modules/formatDate"
+import Div from "@local_modules/tags/Div"
+import { borderRadius, color } from "@theme/index"
+import { ICharacter, IChatRoom } from "@type"
+import { useEffect, useState } from "react"
+import Button from "@local_modules/tags/Button"
+import useRouter from "@local_modules/router/useRouter"
+import { IconTrashOutline } from "@components/images"
+import { ElementClickEvent } from "@local_modules/tags/type"
 
 export default function MyCharacterList() {
-  const router = useRouter();
-  const { createErrorCatch } = useErrorCatch();
+  const router = useRouter()
+  const { createErrorCatch } = useErrorCatch()
 
-  const [myCharacterList, setMyCharacterList] = useState<ICharacter.MineResponse>({ list: [], length: 0 });
+  const [myCharacterList, setMyCharacterList] = useState<ICharacter.MineResponse>({ list: [], length: 0 })
 
   useEffect(() => {
-    (async() => {
-      try {
-        const { data } = await apiClient.character.mine({ visibility: 'ALL' });
-        setMyCharacterList(data);
-      } catch(error) {
-        createErrorCatch(error);
-      }
-    })()
+    setCharacterList();
   }, [])
 
-  const onNavToChat = (_id:Schema.Types.ObjectId) => {
-    router.push(`/chat/${_id}`);
+  const setCharacterList = async() => {
+    try {
+      const { data } = await apiClient.character.mine({ visibility: 'ALL' })
+      setMyCharacterList(data)
+    } catch(error) {
+      createErrorCatch(error)
+    }
+  }
+
+  const onDeleteCharacter = async(e:ElementClickEvent, _id:ICharacter.Model['_id']) => {
+    e.instance.stop();
+
+    try {
+      const { data } = await apiClient.character.delete({ characterId: _id })
+      setCharacterList()
+      alert(data.message)
+    } catch(error) {
+      createErrorCatch(error)
+    }
+  }
+
+  const onNavToChat = (_id:IChatRoom.Model['_id']) => {
+    router.push(`/chat/${_id}`)
   }
 
   return (
@@ -45,7 +59,7 @@ export default function MyCharacterList() {
             <Div style={styles.titleRow}>
               <Div style={styles.name}>{character.name}</Div>
               <Div style={styles.buttonRow}>
-                <Button style={styles.button}>
+                <Button style={styles.button} onClick={(e) => onDeleteCharacter(e, character._id)}>
                   <IconTrashOutline color={color.primary} width={16} height={16}/>
                 </Button>
               </Div>

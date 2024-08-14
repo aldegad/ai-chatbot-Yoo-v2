@@ -118,6 +118,9 @@ export const apiClient = {
     create: (params: ICharacter.CreateParams): Promise<AxiosResponse<ICharacter.CreateResponse>> => {
       return instance.post('/api/character/create', params)
     },
+    delete: (params: ICharacter.DeleteParams): Promise<AxiosResponse<ICharacter.DeleteResponse>> => {
+      return instance.post('/api/character/delete', params)
+    },
     list: (params: ICharacter.ListParams): Promise<AxiosResponse<ICharacter.ListResponse>> => {
       return instance.post('/api/character/list', params)
     },
