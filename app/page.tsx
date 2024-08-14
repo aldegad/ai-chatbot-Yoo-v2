@@ -1,22 +1,32 @@
 "use client";
 
+import { useEffect } from 'react'
 import Div from '@local_modules/tags/Div'
 import Button from '@local_modules/tags/Button'
 import { color } from '@theme/index'
 import H1 from '@local_modules/tags/H1'
 import useRouter from '@local_modules/router/useRouter'
 import Span from '@local_modules/tags/Span'
-import createStyle from '@local_modules/theme/createStyle';
+import createStyle from '@local_modules/theme/createStyle'
+import useAlert from '@components/useAlert'
 
 export default function App() {
-  const router = useRouter();
+  const router = useRouter()
+  const { createAlert } = useAlert()
 
   const onNavToLogin = () => {
-    router.push('/login');
+    router.push('/login')
   }
   const onNavToSignUp = () => {
-    router.push('/signUp');
+    router.push('/signUp')
   }
+
+  useEffect(() => {
+    (async() => {
+      (await createAlert({ title: 'test', content: 'test content' })).present();
+    })()
+  }, [])
+
   // header setting은 나중에 하자.
   return (
     <Div style={styles.container}>

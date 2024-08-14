@@ -1,30 +1,30 @@
-import React, { createContext, useState, useContext, useCallback, ReactNode, useEffect, useRef } from 'react';
-import { Modal, View, StyleSheet, ModalProps } from 'react-native';
+import React, { createContext, useState, useContext, useCallback, ReactNode, useEffect, useRef } from 'react'
+import { Modal, ModalProps } from 'react-native'
 
 interface ModalContextType {
-  createModal: (content: React.ReactNode, options?: Partial<ModalProps>) => Promise<{ present: () => void; dismiss: () => void }>;
+  createModal: (content: (props: { dismiss: () => void }) => React.ReactNode, options?: Partial<ModalProps>) => Promise<{ present: () => void; dismiss: () => void }>
 }
 
-const ModalContext = createContext<ModalContextType | null>(null);
+const ModalContext = createContext<ModalContextType | null>(null)
 
 interface ModalType {
-  id: number;
-  content: React.ReactNode;
-  visible: boolean;
-  options: Partial<ModalProps>;
-  present: () => void;
-  dismiss: () => void;
+  id: number
+  content: (props: { dismiss: () => void }) => React.ReactNode
+  visible: boolean
+  options: Partial<ModalProps>
+  present: () => void
+  dismiss: () => void
 }
 
 interface ModalProviderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
-  const [modals, setModals] = useState<ModalType[]>([]);
-  const timersRef = useRef<{ [key: number]: NodeJS.Timeout }>({});
+  const [modals, setModals] = useState<ModalType[]>([])
+  const timersRef = useRef<{ [key: number]: NodeJS.Timeout }>({})
 
-  const createModal = useCallback((content: React.ReactNode, options: Partial<ModalProps> = {}) => {
+  const createModal = useCallback((content: (props: { dismiss: () => void }) => React.ReactNode, options: Partial<ModalProps> = {}) => {
     return new Promise<{ present: () => void; dismiss: () => void }>((resolve) => {
       const modal: ModalType = {
         id: Date.now(),
@@ -32,27 +32,27 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         visible: false,
         options,
         present: () => {
-          setModals((prev) => prev.map(m => m.id === modal.id ? {...m, visible: true} : m));
+          setModals((prev) => prev.map(m => m.id === modal.id ? {...m, visible: true} : m))
         },
         dismiss: () => {
-          setModals((prev) => prev.map(m => m.id === modal.id ? {...m, visible: false} : m));
+          setModals((prev) => prev.map(m => m.id === modal.id ? {...m, visible: false} : m))
           timersRef.current[modal.id] = setTimeout(() => {
-            setModals((prev) => prev.filter((m) => m.id !== modal.id));
-            delete timersRef.current[modal.id];
-          }, 500);
+            setModals((prev) => prev.filter((m) => m.id !== modal.id))
+            delete timersRef.current[modal.id]
+          }, 300)
         }
-      };
-      setModals((prev) => [...prev, modal]);
-      resolve({ present: modal.present, dismiss: modal.dismiss });
-    });
-  }, []);
+      }
+      setModals((prev) => [...prev, modal])
+      resolve({ present: modal.present, dismiss: modal.dismiss })
+    })
+  }, [])
 
   useEffect(() => {
     return () => {
       // Clean up any remaining timers when the component unmounts
-      Object.values(timersRef.current).forEach(clearTimeout);
-    };
-  }, []);
+      Object.values(timersRef.current).forEach(clearTimeout)
+    }
+  }, [])
 
   return (
     <ModalContext.Provider value={{ createModal }}>
@@ -66,17 +66,17 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
           onRequestClose={modal.dismiss}
           {...modal.options}
         >
-          {React.isValidElement(modal.content) && React.cloneElement(modal.content)}
+          {modal.content({ dismiss: modal.dismiss })}
         </Modal>
       ))}
     </ModalContext.Provider>
-  );
-};
+  )
+}
 
 export const useModal = (): ModalContextType => {
-  const context = useContext(ModalContext);
+  const context = useContext(ModalContext)
   if (!context) {
-    throw new Error('useModal must be used within a ModalProvider');
+    throw new Error('useModal must be used within a ModalProvider')
   }
-  return context;
-};
+  return context
+}

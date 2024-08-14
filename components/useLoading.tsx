@@ -10,10 +10,10 @@ export type LoadingProps = {
   onRequestClose: () => void
 }
 export default function useLoading() {
-  const { createModal } = useModal();
+  const { createModal } = useModal()
   
   const createLoading = async () => {
-    const loading = await createModal(
+    const loading = await createModal(() =>
       <Div style={styles.container}>
         {
           Platform.OS === 'web' ?
@@ -28,13 +28,13 @@ export default function useLoading() {
       </Div>,
       {
         transparent: true,
-        animationType: 'fade',
+        animationType: 'fade'
       }
-    );
-    return loading;
-  };
+    )
+    return loading
+  }
 
-  return { createLoading };
+  return { createLoading }
 }
 
 const styles = createStyle({

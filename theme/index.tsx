@@ -4,7 +4,8 @@ export const color = {
   primary: 'rgb(138, 107, 244)',
   text: '#313131',
   gray: '#6f6f6f',
-  backdrop: 'rgba(138, 107, 244, 0.5)'
+  backdrop: '#7360b17f',
+  white: 'white'
 }
 
 export const font = Platform.OS === 'web' ? require('./theme.web').default : require('./theme.native').default;
