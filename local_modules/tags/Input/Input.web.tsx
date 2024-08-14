@@ -1,15 +1,15 @@
 
-import { normalizeStyles } from '@local_modules/tags/normalize';
-import { InputElementProps } from '@local_modules/tags/type';
-import React, { useCallback } from 'react';
-import { StyleSheet } from 'react-native';
+import { normalizeStyles } from '@local_modules/tags/normalize'
+import { InputElementProps } from '@local_modules/tags/type'
+import React, { forwardRef, useCallback } from 'react'
+import { StyleSheet } from 'react-native'
 
-export default function WebInput({ 
+const WebInput = forwardRef<HTMLInputElement, InputElementProps>(({ 
   style, 
   onChange, 
   onEnter,
   ...inputProps
-}: InputElementProps) {
+}, ref) => {
   const flattenStyle = StyleSheet.flatten([normalizeStyles.input, style]);
   
   const onInputChange = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
@@ -17,23 +17,28 @@ export default function WebInput({
       web: e,
       instance: {
         value: e.target.value,
-      },
-    });
-  }, [onChange]);
+      }
+    })
+  }, [onChange])
 
   const onInputEnter = useCallback((e:React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key === 'Enter')
-    onEnter?.({
-      web: e,
-      instance: {
-        value: (e.target as any).value,
-      }
-    });
-  }, [onChange]);
+    if(e.key === 'Enter') {
+      onEnter?.({
+        web: e,
+        instance: {
+          value: (e.target as any).value,
+        }
+      })
+    }
+  }, [onChange])
   
-  return <input 
-    style={flattenStyle}
-    onChange={onInputChange}
-    onKeyUp={onInputEnter}
-    {...inputProps}></input>;
-}
+  return (
+    <input 
+      ref={ref}
+      style={flattenStyle}
+      onChange={onInputChange}
+      onKeyUp={onInputEnter}
+      {...inputProps}></input>
+  )
+})
+export default WebInput;

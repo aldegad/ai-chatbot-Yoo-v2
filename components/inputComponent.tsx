@@ -5,9 +5,9 @@ import Div from "@local_modules/tags/Div";
 import Input from "@local_modules/tags/Input";
 import Label from "@local_modules/tags/Label";
 import Span from "@local_modules/tags/Span";
-import { InputElementChangeEvent, InputType } from "@local_modules/tags/type";
+import { InputElement, InputElementChangeEvent, InputType } from "@local_modules/tags/type";
 import { color } from "@theme/index";
-import { useMemo, useState } from "react";
+import { forwardRef, useMemo, useState } from "react";
 
 export type InputComponentProps = {
   label?: string,
@@ -18,7 +18,7 @@ export type InputComponentProps = {
   onEnter?: (e:any) => void
   onChange?: (e:InputElementChangeEvent) => void
 }
-export default function InputComponent({ label, ...inputProps }:InputComponentProps) {
+const InputComponent = forwardRef<InputElement, InputComponentProps>(({ label, ...inputProps }, ref) => {
   const { value, maxLength:_maxLength, type:_type } = inputProps;
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -30,7 +30,7 @@ export default function InputComponent({ label, ...inputProps }:InputComponentPr
       default:
         return _type;
     }
-  }, [passwordVisible]);
+  }, [passwordVisible, _type]);
 
   const onTogglePasswordVisible = () => {
     setPasswordVisible(!passwordVisible);
@@ -45,6 +45,7 @@ export default function InputComponent({ label, ...inputProps }:InputComponentPr
       <Div>
         <Input 
           {...inputProps}
+          ref={ref}
           maxLength={maxLength}
           type={type}
           style={[styles.input, type === 'password' ? styles.inputWithIconRight : null]}/>
@@ -61,7 +62,8 @@ export default function InputComponent({ label, ...inputProps }:InputComponentPr
       </Div>
     </Div>
   )
-}
+})
+export default InputComponent;
 
 const styles = createStyle({
   inputComponent: {
