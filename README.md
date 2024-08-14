@@ -1,6 +1,4 @@
-<div style="background-color: #FFF3CD; padding: 10px; border-radius: 5px;">
 이 프로젝트는 초기 단계입니다. 앱과 웹을 동시에 서비스하기 위해 Expo expo-router와 Next.js의 app-router를 통합한 프로젝트를 구축하고 있습니다.
-</div>
 
 ## 프로젝트 설명
 
@@ -81,7 +79,6 @@ cd ai-chatbot-yoo-v2
 
 ```bash
 npm install
-npm install @expo/next-adapter @expo/vector-icons @react-navigation/native @react-navigation/stack bcryptjs jsonwebtoken
 ```
 
 ### 3. 환경 변수 설정
@@ -116,6 +113,8 @@ REJECTED_MESSAGE_FILTER2=<YOUR_REJECTED_MESSAGE_FILTER2>
 
 ```bash
 npm run dev
+npm run android
+npm run ios
 ```
 
 ### 6. API 엔드포인트 규약
