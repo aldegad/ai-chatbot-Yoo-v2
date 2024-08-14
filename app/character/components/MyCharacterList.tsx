@@ -11,12 +11,13 @@ import { useEffect, useState } from "react";
 import Button from "@local_modules/tags/Button";
 import useRouter from "@local_modules/router/useRouter";
 import { Schema } from "mongoose";
+import { IconTrashOutline } from "@components/images";
 
 export default function MyCharacterList() {
   const router = useRouter();
   const { createErrorCatch } = useErrorCatch();
 
-  const [myCharacterList, setMyCharacterList] = useState<ICharacter.MineResponse>({ list: [], totalCount: 0 });
+  const [myCharacterList, setMyCharacterList] = useState<ICharacter.MineResponse>({ list: [], length: 0 });
 
   useEffect(() => {
     (async() => {
@@ -37,8 +38,18 @@ export default function MyCharacterList() {
     <Div style={styles.list}>
       {
         myCharacterList.list.map(character => (
-          <Button key={String(character._id)} style={styles.item} onClick={() => onNavToChat(character._id)}>
-            <Div style={styles.name}>{character.name}</Div>
+          <Button 
+            key={String(character._id)} 
+            style={styles.item} 
+            onClick={() => onNavToChat(character._id)}>
+            <Div style={styles.titleRow}>
+              <Div style={styles.name}>{character.name}</Div>
+              <Div style={styles.buttonRow}>
+                <Button style={styles.button}>
+                  <IconTrashOutline color={color.primary} width={16} height={16}/>
+                </Button>
+              </Div>
+            </Div>
             <Div>{character.system}</Div>
             <Div style={styles.createAt}>{formatDate(character.createdAt)}</Div>
           </Button>
@@ -60,10 +71,25 @@ const styles = createStyle({
     textAlign: 'left',
     alignItems: 'flex-start'
   },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   name: {
     fontSize: 18,
     fontWeight: 600,
+    flex: 1,
     color: color.primary
+  },
+  buttonRow: {
+    flexDirection: 'row'
+  },
+  button: {
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 0
   },
   createAt: {
     fontSize: 12,

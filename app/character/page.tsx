@@ -4,7 +4,6 @@ import React, { useCallback } from 'react'
 import Div from '@local_modules/tags/Div'
 import { borderRadius, color } from 'theme'
 import Button from '@local_modules/tags/Button'
-import useFormModel from '@local_modules/useFormModel'
 import createStyle from '@local_modules/theme/createStyle'
 import useRouter from '@local_modules/router/useRouter'
 import MyCharacterList from '@app/character/components/MyCharacterList'
@@ -12,14 +11,9 @@ import MyCharacterList from '@app/character/components/MyCharacterList'
 export default function Page() {
   const router = useRouter();
 
-  const [fields, modelValue] = useFormModel({
-    characterName: '',
-    characterSetting: ''
-  })
-
   const onClick = useCallback(async() => {
     router.push('/character/create');
-  }, [fields])
+  }, [router])
 
   return (
     <Div style={styles.layout}>

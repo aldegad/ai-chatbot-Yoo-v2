@@ -1,0 +1,13 @@
+diff --git a/node_modules/expo-font/build/FontLoader.js b/node_modules/expo-font/build/FontLoader.js
+index 6cb6ca1..28b2782 100644
+--- a/node_modules/expo-font/build/FontLoader.js
++++ b/node_modules/expo-font/build/FontLoader.js
+@@ -8,7 +8,7 @@ export function fontFamilyNeedsScoping(name) {
+         Platform.OS !== 'ios' &&
+         !Constants.systemFonts.includes(name) &&
+         name !== 'System' &&
+-        !name.includes(Constants.sessionId));
++        !name.includes?.(Constants.sessionId));
+ }
+ export function getAssetForSource(source) {
+     if (source instanceof Asset) {
