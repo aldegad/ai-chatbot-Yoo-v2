@@ -12,7 +12,6 @@ import useAlert from '@components/useAlert'
 
 export default function App() {
   const router = useRouter()
-  const { createAlert } = useAlert()
 
   const onNavToLogin = () => {
     router.push('/login')
@@ -20,12 +19,6 @@ export default function App() {
   const onNavToSignUp = () => {
     router.push('/signUp')
   }
-
-  useEffect(() => {
-    (async() => {
-      (await createAlert({ title: 'test', content: 'test content' })).present();
-    })()
-  }, [])
 
   // header setting은 나중에 하자.
   return (

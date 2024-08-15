@@ -13,9 +13,11 @@ import useLoading from '@components/useLoading'
 import { apiClient } from '@apiClient'
 import { useErrorCatch } from '@components/useErrorCatch'
 import createStyle from '@local_modules/theme/createStyle'
+import useAlert from '@components/useAlert'
 
 export default function Page() {
   const router = useRouter();
+  const { createAlert } = useAlert();
   const { createLoading } = useLoading();
   const { createErrorCatch } = useErrorCatch();
 
@@ -25,25 +27,24 @@ export default function Page() {
   })
 
   const onSubmit = useCallback(async() => {
-    if(!isValidEmail(fields.email)) return alert('유효한 이메일이 아닙니다');
-    if(!isValidPassword(fields.password)) return alert('비밀번호는 영문+숫자 8자이상 입력해주세요.');
+    if(!isValidEmail(fields.email)) return (await createAlert({ content: '유효한 이메일이 아닙니다.' })).present()
+    if(!isValidPassword(fields.password)) return (await createAlert({ content: `비밀번호는 영문+숫자 8자이상 입력해주세요` })).present()
     
-    const loading = await createLoading();
-    loading.present();
+    const loading = await createLoading()
+    loading.present()
 
     try {
       const { data } = await apiClient.user.login({
         email: fields.email,
         password: fields.password
       })
-      alert(data.message);
 
       router.replace('/character');
     } catch (error) {
-      createErrorCatch(error);
+      createErrorCatch(error)
     }
 
-    loading.dismiss();
+    loading.dismiss()
   }, [fields])
 
   return (

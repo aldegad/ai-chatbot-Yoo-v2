@@ -10,7 +10,7 @@ import { ICharacter, IChatRoom } from "@type"
 import { useEffect, useState } from "react"
 import Button from "@local_modules/tags/Button"
 import useRouter from "@local_modules/router/useRouter"
-import { IconTrashOutline } from "@components/images"
+import { IconAccessibilityOutline, IconTrashOutline } from "@components/images"
 import { ElementClickEvent } from "@local_modules/tags/type"
 
 export default function MyCharacterList() {
@@ -32,8 +32,14 @@ export default function MyCharacterList() {
     }
   }
 
+  const onViewCharacter = (e:ElementClickEvent, _id:ICharacter.Model['_id']) => {
+    e.instance.stop()
+
+    // modal Open
+  }
+
   const onDeleteCharacter = async(e:ElementClickEvent, _id:ICharacter.Model['_id']) => {
-    e.instance.stop();
+    e.instance.stop()
 
     try {
       const { data } = await apiClient.character.delete({ characterId: _id })
@@ -59,6 +65,9 @@ export default function MyCharacterList() {
             <Div style={styles.titleRow}>
               <Div style={styles.name}>{character.name}</Div>
               <Div style={styles.buttonRow}>
+                <Button style={styles.button} onClick={(e) => onViewCharacter(e, character._id)}>
+                  <IconAccessibilityOutline color={color.primary} width={16} height={16}/>
+                </Button>
                 <Button style={styles.button} onClick={(e) => onDeleteCharacter(e, character._id)}>
                   <IconTrashOutline color={color.primary} width={16} height={16}/>
                 </Button>
@@ -81,13 +90,12 @@ const styles = createStyle({
     backgroundColor: 'white',
     borderRadius: borderRadius.base,
     padding: '12 14',
-    rowGap: 6,
-    textAlign: 'left',
-    alignItems: 'flex-start'
+    rowGap: 8,
+    textAlign: 'left'
   },
   titleRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   name: {
     fontSize: 18,
@@ -96,7 +104,8 @@ const styles = createStyle({
     color: color.primary
   },
   buttonRow: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    gap: 8
   },
   button: {
     width: 20,
@@ -107,6 +116,7 @@ const styles = createStyle({
   },
   createAt: {
     fontSize: 12,
-    color: color.gray
+    color: color.gray,
+    textAlign: 'right'
   }
 })

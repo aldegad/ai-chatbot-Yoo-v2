@@ -36,8 +36,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
-div {
+div, button {
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 }

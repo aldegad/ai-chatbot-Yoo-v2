@@ -12,7 +12,7 @@ export default function Page() {
   const router = useRouter();
 
   const onClick = useCallback(async() => {
-    router.push('/character/create');
+    router.push('/character/create')
   }, [router])
 
   return (
