@@ -61,7 +61,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         <Modal 
           key={modal.id} 
           transparent={modal.options.transparent ?? true} 
-          visible={modal.visible} 
+          visible={modal.visible}
           animationType={modal.options.animationType ?? "fade"}
           onRequestClose={modal.dismiss}
           {...modal.options}

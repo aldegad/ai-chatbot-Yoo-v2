@@ -22,7 +22,9 @@ export const normalizeStyles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     borderRadius: 8,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexDirection: 'column',
+    textAlign: 'center'
   },
   label: {
     fontSize: 12,

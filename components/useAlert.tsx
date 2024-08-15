@@ -16,7 +16,7 @@ export default function useAlert() {
   const { createModal } = useModal()
   
   const createAlert = async({ title, content, buttons }:AlertProps) => {
-    const loading = await createModal(({ dismiss }) => (
+    const alert = await createModal(({ dismiss }) => (
         <Div style={styles.modal} onClick={dismiss}>
           <Div style={styles.container}>
             {
@@ -56,7 +56,7 @@ export default function useAlert() {
         animationType: 'fade'
       }
     )
-    return loading
+    return alert
   }
 
   return { createAlert }
