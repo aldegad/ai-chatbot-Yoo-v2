@@ -13,7 +13,11 @@ interface FormControl {
   onEnter: (e:any) => void
 }
 
-export default function useFormModel<T extends FormFields>(initialState: T): [T, (name: keyof T) => FormControl] {
+export default function useFormModel<T extends FormFields>(initialState: T): { 
+  fields: T, 
+  modelValue: (name: keyof T) => FormControl,
+  resetFields: () => void
+} {
   const [fields, setFields] = useState<T>(initialState)
   const fieldsRef = useRef<{ [K in keyof T]: React.RefObject<any> }>({} as any)
   const fieldsOrder = useRef<(keyof T)[]>(Object.keys(initialState) as (keyof T)[])
@@ -48,5 +52,10 @@ export default function useFormModel<T extends FormFields>(initialState: T): [T,
     onEnter: () => focusNextField(name)
   })
 
-  return [fields, modelValue]
+  // 초기값으로 fields를 리셋하는 함수
+  const resetFields = useCallback(() => {
+    setFields(initialState)
+  }, [initialState])
+
+  return { fields, modelValue, resetFields }
 }

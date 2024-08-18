@@ -19,7 +19,7 @@ export default function Page() {
   const { createLoading } = useLoading();
   const { createErrorCatch } = useErrorCatch();
 
-  const [fields, modelValue] = useFormModel({
+  const { fields, modelValue } = useFormModel({
     email: '',
     password: ''
   })

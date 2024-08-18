@@ -20,7 +20,7 @@ export default function Page() {
   const router = useRouter();
 
 
-  const [fields, modelValue] = useFormModel<ICharacter.CreateParams>({
+  const { fields, modelValue } = useFormModel<ICharacter.CreateParams>({
     name: '',
     system: '',
     secret: '',

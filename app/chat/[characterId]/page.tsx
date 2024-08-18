@@ -13,7 +13,7 @@ export default function Page() {
   const params = useParams();
   const characterId = params.characterId;
 
-  const [fields, modelValue] = useFormModel({
+  const { fields, modelValue } = useFormModel({
     userMessage: ''
   })
   const [chatList, setChatList] = useState<string[]>([]);

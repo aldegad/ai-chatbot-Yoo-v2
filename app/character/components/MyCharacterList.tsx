@@ -50,8 +50,10 @@ export default function MyCharacterList() {
     }
   }
 
-  const onNavToChat = (_id:IChatRoom.Model['_id']) => {
-    router.push(`/chat/${_id}`)
+  const onNavToChat = async(_id:IChatRoom.Model['_id']) => {
+    // createChatRoom
+    // const chatRoom = await createChatRoom({ characterId: _id }).present()
+    // router.push(`/chat/${_id}`)
   }
 
   return (
@@ -84,7 +86,7 @@ export default function MyCharacterList() {
 
 const styles = createStyle({
   list: {
-    rowGap: 12,
+    rowGap: 12
   },
   item: {
     backgroundColor: 'white',
