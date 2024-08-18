@@ -9,6 +9,11 @@ export const color = {
 }
 
 export const font = Platform.OS === 'web' ? require('./theme.web').default : require('./theme.native').default;
+export const fontSize = {
+  base: 14,
+  h1: 16,
+  h2: 16
+}
 export const borderRadius = {
   base: 16
 }

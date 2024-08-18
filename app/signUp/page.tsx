@@ -3,7 +3,7 @@
 import React, { useCallback } from 'react'
 import { StyleSheet } from 'react-native'
 import Div from '@local_modules/tags/Div'
-import { borderRadius, color } from 'theme'
+import { borderRadius, color, fontSize } from 'theme'
 import Button from '@local_modules/tags/Button'
 import useFormModel from '@local_modules/useFormModel'
 import InputComponent from '@components/inputComponent'
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.primary,
   },
   title: {
-    fontSize: 16,
+    fontSize: fontSize.h1
   },
   container: {
     rowGap: 12,

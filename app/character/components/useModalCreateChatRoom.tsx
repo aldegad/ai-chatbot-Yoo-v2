@@ -1,6 +1,8 @@
 import InputComponent from "@components/inputComponent"
 import Button from "@local_modules/tags/Button"
 import Div from "@local_modules/tags/Div"
+import H1 from "@local_modules/tags/H1"
+import H2 from "@local_modules/tags/H2"
 import createStyle from "@local_modules/theme/createStyle"
 import useFormModel from "@local_modules/useFormModel"
 import { useModal } from "@local_modules/useModal"
@@ -8,7 +10,7 @@ import { borderRadius, color } from "@theme/index"
 import { IChatRoom } from "@type"
 import { Schema } from "mongoose"
 
-const ModalCreateRoom = async() => {
+const useModalCreateRoom = () => {
   const { createModal } = useModal()
 
   const { fields, modelValue, resetFields } = useFormModel<Omit<IChatRoom.CreateParams, 'characterId'>>({
@@ -19,12 +21,13 @@ const ModalCreateRoom = async() => {
   const createChatRoom = async(props: { characterId: Schema.Types.ObjectId }) => {
     resetFields()
 
-    const chatRoom = await createModal(() => (
-      <Div style={styles.modal}>
+    const chatRoom = await createModal(({ dismiss }) => (
+      <Div style={styles.modal} onClick={dismiss}>
         <Div style={styles.container}>
+          <H2>대화 생성</H2>
           <InputComponent label="* 유저 캐릭터 이름" maxLength={20} {...modelValue('userName')}/>
           <InputComponent label="유저 설정" placeholder="유저 캐릭터의 설정입니다." maxLength={500} {...modelValue('userSystem')}/>
-          <Button>대화 생성</Button>
+          <Button style={styles.button}>대화 생성</Button>
         </Div>
       </Div>
     ))
@@ -34,7 +37,7 @@ const ModalCreateRoom = async() => {
 
   return { createChatRoom }
 }
-export default ModalCreateRoom
+export default useModalCreateRoom
 
 const styles = createStyle({
   modal: {
@@ -49,7 +52,6 @@ const styles = createStyle({
     padding: '20 20 10 20',
     width: '100%',
     maxWidth: 280,
-    textAlign: 'center',
     gap: 12
   },
   title: {
@@ -59,11 +61,8 @@ const styles = createStyle({
   content: {
     fontSize: 14
   },
-  buttonRow: {
-    flexDirection: 'row',
-    rowGap: 12
-  },
   button: {
-    flex: 1
+    flex: 1,
+    backgroundColor: color.primary
   }
 })

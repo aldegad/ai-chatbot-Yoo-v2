@@ -7,6 +7,7 @@ import Button from '@local_modules/tags/Button'
 import createStyle from '@local_modules/theme/createStyle'
 import useRouter from '@local_modules/router/useRouter'
 import MyCharacterList from '@app/character/components/MyCharacterList'
+import H1 from '@local_modules/tags/H1'
 
 export default function Page() {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function Page() {
   return (
     <Div style={styles.layout}>
       <Div style={styles.container}>
+        <H1>캐릭터 목록</H1>
         <MyCharacterList/>
         <Button style={styles.characterAddButton} onClick={onClick}>+ 캐릭터 생성</Button>
       </Div>

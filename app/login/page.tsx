@@ -3,7 +3,7 @@
 import React, { useCallback } from 'react'
 import Div from '@local_modules/tags/Div'
 import H1 from '@local_modules/tags/H1'
-import { borderRadius, boxShadow, color } from 'theme'
+import { borderRadius, boxShadow, color, fontSize } from 'theme'
 import Button from '@local_modules/tags/Button'
 import useFormModel from '@local_modules/useFormModel'
 import InputComponent from '@components/inputComponent'
@@ -67,7 +67,7 @@ const styles = createStyle({
     backgroundColor: color.primary,
   },
   title: {
-    fontSize: 16,
+    fontSize: fontSize.h1
   },
   container: {
     rowGap: 12,

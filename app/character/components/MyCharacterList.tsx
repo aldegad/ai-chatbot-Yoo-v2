@@ -12,10 +12,13 @@ import Button from "@local_modules/tags/Button"
 import useRouter from "@local_modules/router/useRouter"
 import { IconAccessibilityOutline, IconTrashOutline } from "@components/images"
 import { ElementClickEvent } from "@local_modules/tags/type"
+import useModalCreateRoom from "@app/character/components/useModalCreateChatRoom"
+import H2 from "@local_modules/tags/H2"
 
 export default function MyCharacterList() {
   const router = useRouter()
   const { createErrorCatch } = useErrorCatch()
+  const { createChatRoom } = useModalCreateRoom()
 
   const [myCharacterList, setMyCharacterList] = useState<ICharacter.MineResponse>({ list: [], length: 0 })
 
@@ -52,12 +55,13 @@ export default function MyCharacterList() {
 
   const onNavToChat = async(_id:IChatRoom.Model['_id']) => {
     // createChatRoom
-    // const chatRoom = await createChatRoom({ characterId: _id }).present()
+    const chatRoom = (await createChatRoom({ characterId: _id })).present()
     // router.push(`/chat/${_id}`)
   }
 
   return (
     <Div style={styles.list}>
+      <H2>내 캐릭터</H2>
       {
         myCharacterList.list.map(character => (
           <Button 
@@ -65,7 +69,7 @@ export default function MyCharacterList() {
             style={styles.item} 
             onClick={() => onNavToChat(character._id)}>
             <Div style={styles.titleRow}>
-              <Div style={styles.name}>{character.name}</Div>
+              <H2 style={styles.name}>{character.name}</H2>
               <Div style={styles.buttonRow}>
                 <Button style={styles.button} onClick={(e) => onViewCharacter(e, character._id)}>
                   <IconAccessibilityOutline color={color.primary} width={16} height={16}/>

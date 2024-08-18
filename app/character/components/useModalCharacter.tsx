@@ -3,10 +3,10 @@ import createStyle from "@local_modules/theme/createStyle"
 import { useModal } from "@local_modules/useModal"
 import { borderRadius, color } from "@theme/index"
 
-const characterModal = () => {
+const useModalcharacter = () => {
   const { createModal } = useModal()
 
-  const createCharacterModal = async() => {
+  const createCharacter = async() => {
     const characterModal = await createModal(() => (
       <Div style={styles.modal}>
         
@@ -18,9 +18,9 @@ const characterModal = () => {
     return characterModal
   }
   
-  return { createCharacterModal }
+  return { createCharacter }
 }
-export default characterModal
+export default useModalcharacter
 
 const styles = createStyle({
   modal: {
