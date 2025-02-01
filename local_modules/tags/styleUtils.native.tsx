@@ -26,13 +26,13 @@ const splitStyles = (style: any): { textStyle: TextStyle; viewStyle: ViewStyle }
 const wrapTextNodes = (children: ReactNode, textStyle: TextStyle): any => {
   return React.Children.map(children, (child) => {
     // 없는애들은 없애버린다.
-    if(child === undefined || child === null || child === '') return
+    if(child === undefined || child === null || child === '') return;
     
     if (React.isValidElement(child)) {
       // TextInput이면 텍스트 스타일을 적용하지 않음
       // console.log(child.type, child.props.style)
       if (child.type === Input || child.type === Textarea) {
-        return child
+        return child;
       }
 
       const { fontWeight, ...otherStyles } = textStyle;
