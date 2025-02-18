@@ -1,4 +1,5 @@
 
+// tags/Input/index.tsx
 import React from 'react';
 import { Platform } from 'react-native';
 import { InputElement, InputElementProps } from '@local_modules/tags/type';

@@ -1,3 +1,4 @@
+// app/theme/index.tsx
 import { Platform } from "react-native"
 
 export const color = {

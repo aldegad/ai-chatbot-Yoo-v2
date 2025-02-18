@@ -1,3 +1,4 @@
+// tags/P/index.tsx
 import { ElementProps } from '@local_modules/tags/type';
 import { Platform } from 'react-native';
 

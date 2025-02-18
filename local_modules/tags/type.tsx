@@ -1,3 +1,4 @@
+// tags/type.tsx
 import { ReactNode } from "react"
 import { GestureResponderEvent, NativeSyntheticEvent, TextInput, TextInputChangeEventData } from "react-native"
 

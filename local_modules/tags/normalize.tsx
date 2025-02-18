@@ -1,3 +1,4 @@
+// tags/normalize.tsx
 import { StyleSheet } from "react-native";
 
 export const normalizeStyles = StyleSheet.create({

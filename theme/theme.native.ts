@@ -1,3 +1,4 @@
+// app/theme/native.ts
 const font = {
   '100': require('public/assets/fonts/Pretendard-Thin.otf'),
   '200': require('public/assets/fonts/Pretendard-ExtraLight.otf'),

@@ -1,3 +1,4 @@
+// app/theme/web.ts
 const font = {
   '100': '/assets/fonts/Pretendard-Thin.otf',
   '200': '/assets/fonts/Pretendard-ExtraLight.otf',
